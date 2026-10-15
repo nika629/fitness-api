@@ -1,0 +1,921 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\exercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\exercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\dictionarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\dictionarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\dictionaries\\dictionaryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\dictionaries\\dictionaryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\dictionaries\\dtos\\createdictionarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\dictionaries\\dtos\\createdictionarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\dictionaries\\dtos\\dictionaryresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\dictionaries\\dtos\\dictionaryresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\dictionary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\dictionary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\constants\\dictionaries\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\constants\\dictionaries\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\constants\\dictionaries\\musclegroups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\constants\\dictionaries\\musclegroups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\constants\\dictionaries\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\constants\\dictionaries\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\constants\\dictionaries\\dictionaries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\constants\\dictionaries\\dictionaries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\database\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\database\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\exercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\exercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\foodlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\foodlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\favoriteexercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\favoriteexercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\common\\serviceresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\common\\serviceresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\workoutplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\workoutplancontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\workoutexercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\workoutexercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\workoutplans\\workoutplanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\workoutplans\\workoutplanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\database\\configurations\\dictionaryconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\database\\configurations\\dictionaryconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\exercises\\exerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\exercises\\exerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\users\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\users\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\workoutexercises\\workoutexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\workoutexercises\\workoutexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\foodlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\foodlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationapi\\controllers\\favoriteexercisecontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3E3D925-627D-E32C-3003-B64D8D173B7E}|WebApplicationAPI\\WebApplicationAPI.csproj|solutionrelative:webapplicationapi\\controllers\\favoriteexercisecontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\roles\\roleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\roles\\roleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\favoriteexercises\\favoriteexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\favoriteexercises\\favoriteexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\foodlogs\\foodlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\foodlogs\\foodlogservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\token\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\token\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\token\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\token\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\database\\configurations\\workoutexerciseconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\database\\configurations\\workoutexerciseconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\database\\configurations\\workoutplanconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\database\\configurations\\workoutplanconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\database\\configurations\\foodlogconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\database\\configurations\\foodlogconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\favoriteexercises\\dtos\\favoriteexercisecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\favoriteexercises\\dtos\\favoriteexercisecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\favoriteexercises\\dtos\\favoriteexerciseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\favoriteexercises\\dtos\\favoriteexerciseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\auth\\dtos\\loginuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\auth\\dtos\\loginuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\auth\\dtos\\registeruserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\auth\\dtos\\registeruserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\workoutplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\workoutplan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\domain\\entities\\workoutexercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\domain\\entities\\workoutexercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\exercises\\dtos\\exerciseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\exercises\\dtos\\exerciseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\exercises\\dtos\\exercisecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\exercises\\dtos\\exercisecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\workoutplans\\dtos\\updateworkoutplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\workoutplans\\dtos\\updateworkoutplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\workoutexercises\\dtos\\workoutexerciseupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\workoutexercises\\dtos\\workoutexerciseupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\exercises\\dtos\\exerciseupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\exercises\\dtos\\exerciseupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|c:\\users\\nino\\desktop\\webapplicationapi\\webapplicationlb\\infrastructure\\services\\workoutexercises\\dtos\\createworkoutexercisedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E38F9929-1056-AE02-F9D6-E80AA6DFAB12}|WebApplicationLB\\WebApplicationLB.csproj|solutionrelative:webapplicationlb\\infrastructure\\services\\workoutexercises\\dtos\\createworkoutexercisedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\publish\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebApplicationAPI\\publish\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 26,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{fabf9319-47eb-497e-b8f6-d9f73fba5f55}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{08a1bf1d-7967-4afc-8253-1790862ab8c9}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{936b24b7-e640-3186-98a7-24307bb298e0}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2039473338:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Dictionary.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\Dictionary.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\Dictionary.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\Dictionary.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\Dictionary.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:14:42.661Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DictionaryService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DictionaryService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DictionaryService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DictionaryService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DictionaryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T11:15:36.152Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CreateDictionaryDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\CreateDictionaryDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\CreateDictionaryDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\CreateDictionaryDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\CreateDictionaryDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-14T12:31:12.832Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DictionaryResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\DictionaryResponseDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\DictionaryResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\DictionaryResponseDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Dictionaries\\DTOs\\DictionaryResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T11:15:19.957Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ExerciseController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\ExerciseController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\ExerciseController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\ExerciseController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\ExerciseController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:01:13.71Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\UserController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAwBAAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:03:49.881Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DictionaryController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\DictionaryController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\DictionaryController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\DictionaryController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\DictionaryController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-14T13:11:15.577Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Roles.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\Roles.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\Roles.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\Roles.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\Roles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:08:33.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:00:54.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MuscleGroups.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\MuscleGroups.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\MuscleGroups.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\MuscleGroups.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\MuscleGroups.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:08:29.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Equipment.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\Equipment.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\Equipment.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\Equipment.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\Equipment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:08:26.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Dictionaries.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\Dictionaries.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\Dictionaries.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Constants\\Dictionaries\\Dictionaries.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Constants\\Dictionaries\\Dictionaries.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:04:49.823Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Program.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Program.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:09:16.02Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\DataBase\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\ApplicationDbContext.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\DataBase\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T11:16:28.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Exercise.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\Exercise.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\Exercise.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\Exercise.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\Exercise.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T12:26:18.322Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FoodLog.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\FoodLog.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\FoodLog.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\FoodLog.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\FoodLog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T12:26:35.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FavoriteExercise.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\FavoriteExercise.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\FavoriteExercise.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\FavoriteExercise.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\FavoriteExercise.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T12:26:32.52Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ServiceResponse.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Common\\ServiceResponse.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Common\\ServiceResponse.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Common\\ServiceResponse.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Common\\ServiceResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-01T09:16:11.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "WorkoutPlanController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\WorkoutPlanController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\WorkoutPlanController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\WorkoutPlanController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\WorkoutPlanController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowE0AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-29T12:16:25.668Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "WorkoutExerciseController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\WorkoutExerciseController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\WorkoutExerciseController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\WorkoutExerciseController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\WorkoutExerciseController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:03:53.469Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "WorkoutPlanService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\WorkoutPlanService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\WorkoutPlanService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\WorkoutPlanService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\WorkoutPlanService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIUAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-29T12:14:37.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DictionaryConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\DictionaryConfiguration.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\DictionaryConfiguration.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\DictionaryConfiguration.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\DictionaryConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T16:27:47.665Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ExerciseService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\ExerciseService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\ExerciseService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\ExerciseService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\ExerciseService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAJAAAABnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:16:56.893Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\appsettings.json",
+              "RelativeToolTip": "WebApplicationAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-26T11:05:18.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Users\\UserService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Users\\UserService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Users\\UserService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Users\\UserService.cs",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAiwKEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:21:23.766Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\publish\\appsettings.json",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\publish\\appsettings.json",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\publish\\appsettings.json",
+              "RelativeToolTip": "WebApplicationAPI\\publish\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-08T17:58:12.322Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "WorkoutExerciseService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\WorkoutExerciseService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\WorkoutExerciseService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\WorkoutExerciseService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\WorkoutExerciseService.cs",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAIYAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-29T11:37:32.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "FoodLogController.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\FoodLogController.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\FoodLogController.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\FoodLogController.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\FoodLogController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAADwv0cAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:36:01.233Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "FavoriteExerciseContoller.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\FavoriteExerciseContoller.cs",
+              "RelativeDocumentMoniker": "WebApplicationAPI\\Controllers\\FavoriteExerciseContoller.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationAPI\\Controllers\\FavoriteExerciseContoller.cs",
+              "RelativeToolTip": "WebApplicationAPI\\Controllers\\FavoriteExerciseContoller.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAADwv0gAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:03:39.46Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "RoleService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Roles\\RoleService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Roles\\RoleService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Roles\\RoleService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Roles\\RoleService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:20:05.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "FavoriteExerciseService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\FavoriteExerciseService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\FavoriteExerciseService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\FavoriteExerciseService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\FavoriteExerciseService.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAqwHsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-29T12:23:24.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "FoodLogService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FoodLogs\\FoodLogService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\FoodLogs\\FoodLogService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FoodLogs\\FoodLogService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\FoodLogs\\FoodLogService.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAqwHYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:19:56.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Auth\\AuthService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Auth\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Auth\\AuthService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Auth\\AuthService.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAgwF8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:21:29.543Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Token\\DTOs\\UserDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Token\\DTOs\\UserDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Token\\DTOs\\UserDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Token\\DTOs\\UserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T08:02:25.227Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Token\\TokenService.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Token\\TokenService.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Token\\TokenService.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Token\\TokenService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAIwC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T12:31:27.291Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "FoodLogConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\FoodLogConfiguration.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\FoodLogConfiguration.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\FoodLogConfiguration.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\FoodLogConfiguration.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-06T11:38:20.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "WorkoutPlanConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutPlanConfiguration.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutPlanConfiguration.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutPlanConfiguration.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutPlanConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-06T11:38:21.899Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "WorkoutExerciseConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutExerciseConfiguration.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutExerciseConfiguration.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutExerciseConfiguration.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\DataBase\\Configurations\\WorkoutExerciseConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-06T11:38:28.141Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "FavoriteExerciseCreateDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseCreateDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseCreateDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseCreateDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseCreateDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-01T09:15:56.773Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "FavoriteExerciseResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseResponseDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseResponseDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\FavoriteExercises\\DTOs\\FavoriteExerciseResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-01T09:15:51.638Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "LoginUserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\LoginUserDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\LoginUserDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\LoginUserDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\LoginUserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T10:37:57.707Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "RegisterUserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\RegisterUserDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\RegisterUserDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\RegisterUserDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Auth\\DTOs\\RegisterUserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T10:37:43.094Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\User.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\User.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAYwBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-26T11:17:32.274Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "WorkoutPlan.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\WorkoutPlan.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\WorkoutPlan.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\WorkoutPlan.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\WorkoutPlan.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAcAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T12:26:47.612Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "WorkoutExercise.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\WorkoutExercise.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Domain\\Entities\\WorkoutExercise.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Domain\\Entities\\WorkoutExercise.cs",
+              "RelativeToolTip": "WebApplicationLB\\Domain\\Entities\\WorkoutExercise.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-28T12:26:43.255Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "ExerciseResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseResponseDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseResponseDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:34:14.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "ExerciseCreateDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseCreateDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseCreateDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseCreateDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseCreateDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:34:13.844Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "UpdateWorkoutPlanDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\DTOs\\UpdateWorkoutPlanDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\DTOs\\UpdateWorkoutPlanDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\DTOs\\UpdateWorkoutPlanDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\WorkoutPlans\\DTOs\\UpdateWorkoutPlanDTO.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAA1wAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:22:50.822Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "WorkoutExerciseUpdateDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\WorkoutExerciseUpdateDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\WorkoutExerciseUpdateDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\WorkoutExerciseUpdateDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\WorkoutExerciseUpdateDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:21:02.14Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "ExerciseUpdateDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseUpdateDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseUpdateDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseUpdateDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\Exercises\\DTOs\\ExerciseUpdateDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:19:06.802Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "CreateWorkoutExerciseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\CreateWorkoutExerciseDTO.cs",
+              "RelativeDocumentMoniker": "WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\CreateWorkoutExerciseDTO.cs",
+              "ToolTip": "C:\\Users\\Nino\\Desktop\\WebApplicationAPI\\WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\CreateWorkoutExerciseDTO.cs",
+              "RelativeToolTip": "WebApplicationLB\\Infrastructure\\Services\\WorkoutExercises\\DTOs\\CreateWorkoutExerciseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-29T11:49:35.669Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

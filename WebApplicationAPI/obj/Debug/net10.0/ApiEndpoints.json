@@ -1,0 +1,869 @@
+[
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Ldto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Auth.LoginUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/Auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Rdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Auth.RegisterUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.DictionaryController",
+    "Method": "GetByGroup",
+    "RelativePath": "api/Dictionary/group/{groupCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupCode",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.Dictionaries.DictionaryResponseDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.DictionaryController",
+    "Method": "CreateDictionary",
+    "RelativePath": "api/Dictionary/group/{groupCode}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Cdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Dictionaries.DTOs.CreateDictionaryDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "groupCode",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.Dictionaries.DictionaryResponseDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.ExerciseController",
+    "Method": "GetExerciseByID",
+    "RelativePath": "api/Exercise/{exerciseID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "exerciseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.Exercises.ExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.ExerciseController",
+    "Method": "UpdateExercise",
+    "RelativePath": "api/Exercise/{exerciseID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "exerciseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Udto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Exercises.ExerciseUpdateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.Exercises.ExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.ExerciseController",
+    "Method": "DeleteExercise",
+    "RelativePath": "api/Exercise/{exerciseID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "exerciseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.ExerciseController",
+    "Method": "CreateExercise",
+    "RelativePath": "api/Exercise/exercise",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Cdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Exercises.ExerciseCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.Exercises.ExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.ExerciseController",
+    "Method": "GetAllExercise",
+    "RelativePath": "api/Exercise/exercises",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.Exercises.ExerciseResponseDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FavoriteExerciseContoller",
+    "Method": "CreateFavorite",
+    "RelativePath": "api/FavoriteExerciseContoller/{userID}/favoriteExercise",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Cdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.FavoriteExercises.FavoriteExerciseCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.FavoriteExercises.FavoriteExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FavoriteExerciseContoller",
+    "Method": "GetFavoriteExerciseById",
+    "RelativePath": "api/FavoriteExerciseContoller/{userID}/favoriteExercise/{favoriteID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "favoriteID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.FavoriteExercises.FavoriteExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FavoriteExerciseContoller",
+    "Method": "DeleteFavorite",
+    "RelativePath": "api/FavoriteExerciseContoller/{userID}/favoriteExercise/{favoriteID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "favoriteID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FavoriteExerciseContoller",
+    "Method": "GetAllFavoriteExercisesByUser",
+    "RelativePath": "api/FavoriteExerciseContoller/{userID}/favoriteExercises",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.FavoriteExercises.FavoriteExerciseResponseDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FoodLogController",
+    "Method": "CreateFoodLog",
+    "RelativePath": "api/FoodLog/{userID}/foodLog",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Cdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.FoodLogs.FoodLogCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.FoodLogs.FoodLogResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FoodLogController",
+    "Method": "GetFoodLogById",
+    "RelativePath": "api/FoodLog/{userID}/foodLog/{foodLogID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "foodLogID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.FoodLogs.FoodLogResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FoodLogController",
+    "Method": "DeleteFoodLog",
+    "RelativePath": "api/FoodLog/{userID}/foodLog/{foodLogID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "foodLogID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.FoodLogController",
+    "Method": "GetAllFoodLogByUser",
+    "RelativePath": "api/FoodLog/{userID}/foodLogs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.FoodLogs.FoodLogResponseDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.UserController",
+    "Method": "GetUserById",
+    "RelativePath": "api/User/{userID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.Users.UserResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.UserController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/User/{userID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Udto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Users.UserUpdateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.Users.UserResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.UserController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/User/{userID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.UserController",
+    "Method": "AssignRole",
+    "RelativePath": "api/User/{userID}/assignRole",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "roleID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.UserController",
+    "Method": "ChangeEmail",
+    "RelativePath": "api/User/{userID}/email",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "CEdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Users.ChangeUserEmailDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.UserController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/User/{userID}/password",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "CPdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.Users.ChangeUserPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutExerciseController",
+    "Method": "GetAllWorkoutExercises",
+    "RelativePath": "api/WorkoutExercise/{userID}/plans/{planID}/workout-exercises",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "planID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.WorkoutExercises.WorkoutExerciseResponseDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutExerciseController",
+    "Method": "GetWorkoutExerciseByID",
+    "RelativePath": "api/WorkoutExercise/{userID}/user/{workoutExerciseID}/workout-exercise",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "workoutExerciseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutExercises.WorkoutExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutExerciseController",
+    "Method": "UpdateWorkoutExercise",
+    "RelativePath": "api/WorkoutExercise/{userID}/user/{workoutExerciseID}/workout-exercise",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "workoutExerciseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Udto",
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutExercises.WorkoutExerciseUpdateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutExercises.WorkoutExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutExerciseController",
+    "Method": "DeleteWorkoutExercise",
+    "RelativePath": "api/WorkoutExercise/{userID}/user/{workoutExerciseID}/workout-exercise",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "workoutExerciseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutExerciseController",
+    "Method": "CreateWorkoutExercise",
+    "RelativePath": "api/WorkoutExercise/{userID}/workout-exercise",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Cdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutExercises.WorkoutExerciseCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutExercises.WorkoutExerciseResponseDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutPlanController",
+    "Method": "GetAllWorkoutPlans",
+    "RelativePath": "api/WorkoutPlan/{userID}/workout-plans",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WebApplicationLB.Infrastructure.Services.WorkoutPlans.WorkoutPlanResposneDTO, WebApplicationLB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutPlanController",
+    "Method": "CreateWorkoutPlan",
+    "RelativePath": "api/WorkoutPlan/{userID}/workout-plans",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Cdto",
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutPlans.CreateWorkoutPlanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutPlans.WorkoutPlanResposneDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutPlanController",
+    "Method": "GetWorkoutPlanByID",
+    "RelativePath": "api/WorkoutPlan/{userID}/workout-plans/{planID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "planID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutPlans.WorkoutPlanResposneDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutPlanController",
+    "Method": "UpdateWorkoutPlan",
+    "RelativePath": "api/WorkoutPlan/{userID}/workout-plans/{planID}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "planID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutPlans.UpdateWorkoutPlanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "WebApplicationLB.Infrastructure.Services.WorkoutPlans.WorkoutPlanResposneDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApplicationAPI.Controllers.WorkoutPlanController",
+    "Method": "DeleteWorkoutPlan",
+    "RelativePath": "api/WorkoutPlan/{userID}/workout-plans/{planID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "planID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

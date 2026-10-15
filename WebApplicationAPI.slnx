@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WebApplicationAPI/WebApplicationAPI.csproj" />
+  <Project Path="WebApplicationLB/WebApplicationLB.csproj" />
+</Solution>
