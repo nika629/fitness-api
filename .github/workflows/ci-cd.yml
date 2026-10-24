@@ -57,4 +57,25 @@ jobs:
           name: api
           path: publish
 
-      - name: Set up
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Copy files to the server
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" \
+            publish/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/myapp/"
+
+      - name: Restart the API and check health
+        run: |
+          ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" '
+            set -e
+            chown -R deploy:deploy /var/www/myapp
+            systemctl restart myapp
+            curl -fsS --retry 10 --retry-delay 3 --retry-connrefused http://127.0.0.1:5000/health
+            echo ""
+            echo "Deploy OK"
+          '
