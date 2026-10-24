@@ -1,0 +1,97 @@
+/* left: the "gym wall" with today's idea of the app */
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  overflow: hidden;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 850;
+  font-stretch: 118%;
+  letter-spacing: -0.02em;
+}
+
+.mark {
+  position: relative;
+  width: 30px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mark::before {
+  content: '';
+  position: absolute;
+  inset: auto 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--steel);
+}
+
+.mark i {
+  position: relative;
+  width: 6px;
+  height: 22px;
+  border-radius: 2px;
+  background: var(--red);
+}
+
+.headline {
+  font-size: clamp(2.4rem, 1.4rem + 3.4vw, 4.4rem);
+  font-weight: 900;
+  font-stretch: 70%;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  max-width: 11ch;
+  color: var(--text);
+}
+
+p:not(.headline) {
+  margin-top: 16px;
+  color: var(--muted);
+  max-width: 40ch;
+  font-size: 1.05rem;
+}
+
+/* a row of bumper plates along the bottom edge */
+.plates {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 120px;
+}
+
+.plates span {
+  width: 26px;
+  border-radius: 6px 6px 0 0;
+  box-shadow: inset 4px 0 0 rgb(255 255 255 / 0.12);
+}
+
+
+@media (max-width: 860px) {
+  :host {
+    padding: 22px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    gap: 18px;
+  }
+
+  .headline {
+    font-size: 2.4rem;
+  }
+
+  .plates {
+    display: none;
+  }
+}

@@ -1,0 +1,168 @@
+<div class="page">
+  <a class="back" routerLink="/plans"><app-icon name="left" [size]="18" /> All plans</a>
+
+  @if (loading() && !plan()) {
+    <div class="skeleton" style="min-height: 120px"></div>
+    <div class="skeleton" style="min-height: 240px"></div>
+  } @else if (notFound()) {
+    <div class="empty">
+      <h3>Plan not found</h3>
+      <p>It may have been deleted.</p>
+      <a class="btn btn-sm" routerLink="/plans">Back to plans</a>
+    </div>
+  } @else if (plan(); as p) {
+    <header class="page-head">
+      <div>
+        <h1>{{ p.workoutPlanName }}</h1>
+        @if (p.workoutPlanDescription) {
+          <p>{{ p.workoutPlanDescription }}</p>
+        }
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="button" (click)="openEditPlan()"><app-icon name="edit" [size]="18" /> Edit</button>
+        <button class="btn btn-danger" type="button" (click)="deletePlan()"><app-icon name="trash" [size]="18" /> Delete</button>
+      </div>
+    </header>
+
+    <dl class="summary">
+      <div>
+        <dt>Exercises</dt>
+        <dd class="num">{{ items().length }}</dd>
+      </div>
+      <div>
+        <dt>Total sets</dt>
+        <dd class="num">{{ totalSets() }}</dd>
+      </div>
+      <div>
+        <dt>Estimated time</dt>
+        <dd><span class="num">{{ minutes() }}</span> min</dd>
+      </div>
+    </dl>
+
+    <section aria-labelledby="order-title">
+      <div class="panel-head">
+        <h2 id="order-title">Order of exercises</h2>
+        <button class="btn btn-primary btn-sm" type="button" (click)="openAdd()">
+          <app-icon name="plus" [size]="16" /> Add exercise
+        </button>
+      </div>
+
+      @if (sorted().length === 0) {
+        <div class="empty">
+          <h3>This plan is empty</h3>
+          <p>Add exercises in the order you want to do them.</p>
+          <button class="btn btn-sm btn-primary" type="button" (click)="openAdd()">Add the first exercise</button>
+        </div>
+      } @else {
+        <ol class="steps">
+          @for (item of sorted(); track item.workoutExerciseID) {
+            <li class="step">
+              <span class="order num" aria-hidden="true">{{ item.orderNumber }}</span>
+              <div class="what">
+                <strong>{{ item.exerciseName }}</strong>
+                <span class="muted">
+                  <span class="load"><b>{{ item.sets }}</b> × <b>{{ item.reps }}</b></span>
+                  <span class="rest"><app-icon name="clock" [size]="14" /> {{ formatRest(item.restTime) }} rest</span>
+                </span>
+              </div>
+              <div class="row-actions">
+                <button class="icon-btn" type="button" (click)="openEditItem(item)" [attr.aria-label]="'Edit ' + item.exerciseName">
+                  <app-icon name="edit" [size]="18" />
+                </button>
+                <button class="icon-btn danger" type="button" (click)="removeItem(item)" [attr.aria-label]="'Remove ' + item.exerciseName">
+                  <app-icon name="trash" [size]="18" />
+                </button>
+              </div>
+            </li>
+          }
+        </ol>
+      }
+    </section>
+  }
+</div>
+
+@switch (dialog()) {
+  @case ('edit-plan') {
+    <app-modal title="Edit plan" (closed)="close()">
+      <form class="form-grid" [formGroup]="planForm" (ngSubmit)="savePlan()" novalidate>
+        @if (formError()) {
+          <p class="form-error" role="alert">{{ formError() }}</p>
+        }
+        <label class="field">
+          <span>Name</span>
+          <input class="input" formControlName="workoutPlanName" />
+          @if (planForm.controls.workoutPlanName.touched && planForm.controls.workoutPlanName.invalid) {
+            <span class="error">Give the plan a name.</span>
+          }
+        </label>
+        <label class="field">
+          <span>Description</span>
+          <textarea class="textarea" formControlName="workoutPlanDescription"></textarea>
+        </label>
+        <div class="form-actions">
+          <button class="btn" type="button" (click)="close()">Cancel</button>
+          <button class="btn btn-primary" type="submit" [disabled]="saving()">{{ saving() ? 'Saving…' : 'Save changes' }}</button>
+        </div>
+      </form>
+    </app-modal>
+  }
+  @case ('add') {
+    <app-modal title="Add exercise" (closed)="close()">
+      <ng-container *ngTemplateOutlet="itemFields" />
+    </app-modal>
+  }
+  @case ('edit-item') {
+    <app-modal [title]="'Edit ' + (editing()?.exerciseName ?? 'exercise')" (closed)="close()">
+      <ng-container *ngTemplateOutlet="itemFields" />
+    </app-modal>
+  }
+}
+
+<ng-template #itemFields>
+  <form class="form-grid" [formGroup]="itemForm" (ngSubmit)="saveItem()" novalidate>
+    @if (formError()) {
+      <p class="form-error" role="alert">{{ formError() }}</p>
+    }
+    @if (dialog() === 'add') {
+      <label class="field">
+        <span>Exercise</span>
+        <select class="select" formControlName="exerciseID">
+          <option [ngValue]="0" disabled>Choose an exercise</option>
+          @for (g of catalogGroups(); track g.name) {
+            <optgroup [label]="g.name">
+              @for (e of g.exercises; track e.exerciseID) {
+                <option [ngValue]="e.exerciseID">{{ e.exerciseName }}</option>
+              }
+            </optgroup>
+          }
+        </select>
+      </label>
+    }
+    <div class="form-row">
+      <label class="field">
+        <span>Sets</span>
+        <input class="input" type="number" min="1" max="100" formControlName="sets" />
+      </label>
+      <label class="field">
+        <span>Reps</span>
+        <input class="input" type="number" min="1" max="1000" formControlName="reps" />
+      </label>
+    </div>
+    <div class="form-row">
+      <label class="field">
+        <span>Rest (seconds)</span>
+        <input class="input" type="number" min="0" max="3600" step="15" formControlName="restTime" />
+      </label>
+      <label class="field">
+        <span>Position in plan</span>
+        <input class="input" type="number" min="0" max="1000" formControlName="orderNumber" />
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn" type="button" (click)="close()">Cancel</button>
+      <button class="btn btn-primary" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Saving…' : dialog() === 'add' ? 'Add exercise' : 'Save changes' }}
+      </button>
+    </div>
+  </form>
+</ng-template>

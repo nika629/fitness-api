@@ -1,0 +1,88 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>Exercises</h1>
+      <p>{{ all().length }} exercises across {{ lookups.muscleGroups().length }} muscle groups. Add any of them to a plan.</p>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Filters">
+    <div class="search">
+      <app-icon name="search" [size]="18" />
+      <input
+        class="input"
+        type="search"
+        placeholder="Search by name"
+        aria-label="Search exercises by name"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+    </div>
+
+    <select class="select" aria-label="Equipment" [ngModel]="equipmentId()" (ngModelChange)="equipmentId.set($event)">
+      <option [ngValue]="null">Any equipment</option>
+      @for (eq of lookups.equipment(); track eq.dictionaryID) {
+        <option [ngValue]="eq.dictionaryID">{{ eq.dictionaryCaption }}</option>
+      }
+    </select>
+
+    <select class="select" aria-label="Difficulty" [ngModel]="difficulty()" (ngModelChange)="difficulty.set($event)">
+      <option value="">Any difficulty</option>
+      <option value="Beginner">Beginner</option>
+      <option value="Intermediate">Intermediate</option>
+      <option value="Advanced">Advanced</option>
+    </select>
+  </section>
+
+  <div class="chips" role="group" aria-label="Muscle group">
+    <button class="chip" type="button" [attr.aria-pressed]="muscleId() === null" (click)="muscleId.set(null)">All</button>
+    @for (m of lookups.muscleGroups(); track m.dictionaryID) {
+      <button
+        class="chip"
+        type="button"
+        [attr.aria-pressed]="muscleId() === m.dictionaryID"
+        (click)="muscleId.set(muscleId() === m.dictionaryID ? null : m.dictionaryID)"
+      >
+        {{ m.dictionaryCaption }}
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="grid">
+      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <div class="skeleton" style="min-height: 170px"></div>
+      }
+    </div>
+  } @else if (error()) {
+    <p class="form-error" role="alert">{{ error() }}</p>
+  } @else if (visible().length === 0) {
+    <div class="empty">
+      <h3>No exercises match</h3>
+      <p>Try a different name or remove a filter.</p>
+      @if (hasFilters()) {
+        <button class="btn btn-sm" type="button" (click)="clearFilters()">Clear filters</button>
+      }
+    </div>
+  } @else {
+    <p class="count muted" aria-live="polite">Showing {{ visible().length }} of {{ all().length }}</p>
+    <div class="grid">
+      @for (e of visible(); track e.exerciseID) {
+        <app-exercise-card
+          [name]="e.exerciseName"
+          [difficulty]="e.exerciseDifficulty"
+          [muscle]="e.muscleGroupName"
+          [equipment]="e.equipmentName"
+          [description]="e.exerciseDescription"
+          [favorite]="favorites.ids().has(e.exerciseID)"
+          (toggleFavorite)="toggleFavorite(e)"
+          (addToPlan)="adding.set(e)"
+        />
+      }
+    </div>
+  }
+</div>
+
+@if (adding(); as ex) {
+  <app-add-to-plan [exerciseId]="ex.exerciseID" [exerciseName]="ex.exerciseName" (closed)="adding.set(null)" />
+}

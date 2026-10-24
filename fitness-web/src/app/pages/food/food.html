@@ -1,0 +1,122 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>Food log</h1>
+      <p>Write down what you eat. Calories and macros add up for each day.</p>
+    </div>
+    <div class="day-nav" role="group" aria-label="Choose day">
+      <button class="icon-btn" type="button" (click)="shiftDay(-1)" aria-label="Previous day"><app-icon name="left" /></button>
+      <span class="day">{{ isToday() ? 'Today' : (day() | date: 'EEE, d MMM') }}</span>
+      <button class="icon-btn" type="button" (click)="shiftDay(1)" [disabled]="isToday()" aria-label="Next day"><app-icon name="right" /></button>
+      @if (!isToday()) {
+        <button class="btn btn-sm" type="button" (click)="goToday()">Today</button>
+      }
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Day total -->
+    <section class="panel total" aria-labelledby="total-title">
+      <h2 id="total-title" class="sr-only">Day total</h2>
+      @if (loading()) {
+        <div class="skeleton" style="min-height: 220px"></div>
+      } @else {
+        <p class="kcal"><span class="num">{{ totals().calories | number: '1.0-0' }}</span> <span class="muted">kcal</span></p>
+        <app-barbell [macros]="totals()" />
+      }
+    </section>
+
+    <!-- Add entry -->
+    <section class="panel" aria-labelledby="add-title">
+      <h2 id="add-title">Add food</h2>
+      <form class="form-grid add-form" [formGroup]="form" (ngSubmit)="add()" novalidate>
+        @if (formError()) {
+          <p class="form-error" role="alert">{{ formError() }}</p>
+        }
+        <div class="name-time">
+          <label class="field">
+            <span>Food</span>
+            <input class="input" formControlName="foodName" placeholder="Chicken breast, 150 g" />
+          </label>
+          <label class="field">
+            <span>Time</span>
+            <input class="input" type="time" formControlName="time" />
+          </label>
+        </div>
+        <div class="macros">
+          <label class="field">
+            <span>Calories</span>
+            <input class="input" type="number" min="0" inputmode="numeric" formControlName="calories" />
+          </label>
+          <label class="field m-protein">
+            <span>Protein (g)</span>
+            <input class="input" type="number" min="0" step="0.1" inputmode="decimal" formControlName="protein" />
+          </label>
+          <label class="field m-carbs">
+            <span>Carbs (g)</span>
+            <input class="input" type="number" min="0" step="0.1" inputmode="decimal" formControlName="carbohydrates" />
+          </label>
+          <label class="field m-fat">
+            <span>Fat (g)</span>
+            <input class="input" type="number" min="0" step="0.1" inputmode="decimal" formControlName="fat" />
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" [disabled]="saving()">
+            <app-icon name="plus" [size]="18" />
+            {{ saving() ? 'Adding…' : 'Add to ' + (isToday() ? 'today' : (day() | date: 'd MMM')) }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <!-- Entries -->
+  <section aria-labelledby="entries-title">
+    <div class="panel-head">
+      <h2 id="entries-title">{{ dayLogs().length }} {{ dayLogs().length === 1 ? 'entry' : 'entries' }}</h2>
+    </div>
+
+    @if (error()) {
+      <p class="form-error" role="alert">{{ error() }}</p>
+    } @else if (!loading() && dayLogs().length === 0) {
+      <div class="empty">
+        <h3>Nothing logged {{ isToday() ? 'today' : 'on this day' }}</h3>
+        <p>Use the form above to add your first meal or snack.</p>
+      </div>
+    } @else {
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Food</th>
+              <th>Calories</th>
+              <th>Protein</th>
+              <th>Carbs</th>
+              <th>Fat</th>
+              <th><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (log of dayLogs(); track log.foodLogID) {
+              <tr>
+                <td data-label="Time" class="muted">{{ log.consumedAt | date: 'HH:mm' }}</td>
+                <td data-label="Food"><strong>{{ log.foodName }}</strong></td>
+                <td data-label="Calories">{{ log.calories }} kcal</td>
+                <td data-label="Protein"><i class="dot" style="background: var(--red)"></i>{{ log.protein }} g</td>
+                <td data-label="Carbs"><i class="dot" style="background: var(--yellow)"></i>{{ log.carbohydrates }} g</td>
+                <td data-label="Fat"><i class="dot" style="background: var(--green)"></i>{{ log.fat }} g</td>
+                <td class="actions">
+                  <button class="icon-btn danger" type="button" (click)="remove(log)" [attr.aria-label]="'Delete ' + log.foodName">
+                    <app-icon name="trash" [size]="18" />
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</div>

@@ -1,0 +1,50 @@
+:host {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+
+.form-side {
+  display: grid;
+  place-items: center;
+  padding: 40px 24px;
+}
+
+.card {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 22px;
+}
+
+.card h1 {
+  font-size: 1.9rem;
+}
+
+.card .lead {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.switch {
+  color: var(--muted);
+  text-align: center;
+}
+
+.notice {
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--yellow-soft);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 860px) {
+  :host {
+    grid-template-columns: 1fr;
+  }
+
+  .form-side {
+    place-items: start center;
+    padding: 28px 20px 40px;
+  }
+}

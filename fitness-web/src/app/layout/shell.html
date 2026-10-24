@@ -1,0 +1,90 @@
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Phone top bar -->
+<header class="topbar">
+  <a routerLink="/" class="brand" aria-label="Fitness home">
+    <span class="mark" aria-hidden="true"><i></i><i></i></span>
+    Fitness
+  </a>
+  <button class="icon-btn" type="button" (click)="theme.toggle()" [attr.aria-label]="theme.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'">
+    <app-icon [name]="theme.theme() === 'dark' ? 'sun' : 'moon'" />
+  </button>
+</header>
+
+@if (drawerOpen()) {
+  <div class="scrim" (click)="drawerOpen.set(false)"></div>
+}
+
+<aside class="sidebar" [class.open]="drawerOpen()" aria-label="Main navigation">
+  <a routerLink="/" class="brand desktop-only" aria-label="Fitness home">
+    <span class="mark" aria-hidden="true"><i></i><i></i></span>
+    Fitness
+  </a>
+
+  <nav>
+    <p class="group">Training</p>
+    @for (item of training; track item.path) {
+      <a
+        class="nav-link"
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: !!item.exact }"
+        ariaCurrentWhenActive="page"
+      >
+        <app-icon [name]="item.icon" />
+        {{ item.label }}
+      </a>
+    }
+
+    @if (auth.isAdmin()) {
+      <p class="group">Admin</p>
+      @for (item of admin; track item.path) {
+        <a class="nav-link" [routerLink]="item.path" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <app-icon [name]="item.icon" />
+          {{ item.label }}
+        </a>
+      }
+    }
+  </nav>
+
+  <div class="sidebar-foot">
+    <a class="me" routerLink="/profile" routerLinkActive="active">
+      <span class="avatar" aria-hidden="true">{{ initials() }}</span>
+      <span class="me-text">
+        <strong>{{ auth.userName() }}</strong>
+        <small>{{ auth.isAdmin() ? 'Admin' : 'Member' }}</small>
+      </span>
+    </a>
+    <div class="foot-actions">
+      <button class="icon-btn desktop-only" type="button" (click)="theme.toggle()" [attr.aria-label]="theme.theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'">
+        <app-icon [name]="theme.theme() === 'dark' ? 'sun' : 'moon'" />
+      </button>
+      <button class="icon-btn" type="button" (click)="auth.logout()" aria-label="Log out" title="Log out">
+        <app-icon name="logout" />
+      </button>
+    </div>
+  </div>
+</aside>
+
+<main id="main" class="content">
+  <router-outlet />
+</main>
+
+<!-- Phone bottom tabs -->
+<nav class="tabbar" aria-label="Quick navigation">
+  @for (item of tabs; track item.path) {
+    <a
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: !!item.exact }"
+      ariaCurrentWhenActive="page"
+    >
+      <app-icon [name]="item.icon" [size]="22" />
+      <span>{{ item.label }}</span>
+    </a>
+  }
+  <button type="button" (click)="drawerOpen.set(!drawerOpen())" [class.active]="drawerOpen()" [attr.aria-expanded]="drawerOpen()">
+    <app-icon name="menu" [size]="22" />
+    <span>Menu</span>
+  </button>
+</nav>

@@ -1,0 +1,592 @@
+/* =====================================================================
+   Fitness – design system
+   Palette: gym-floor graphite + competition bumper-plate colours
+   (red 25 kg, blue 20 kg, yellow 15 kg, green 10 kg).
+   Type: Archivo – its width axis gives condensed "scoreboard" numbers.
+   ===================================================================== */
+
+/* ---------- Tokens ---------- */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #1a1f27;
+  --surface: #222935;
+  --surface-2: #2a3240;
+  --line: #364052;
+  --line-strong: #4a566b;
+  --text: #eceff3;
+  --muted: #9aa5b5;
+
+  --blue: #4a86f5;      /* 20 kg – primary actions */
+  --blue-ink: #ffffff;
+  --red: #ec5a5f;       /* 25 kg – protein, danger */
+  --yellow: #f2b632;    /* 15 kg – carbs */
+  --green: #34ab72;     /* 10 kg – fat, success */
+
+  --blue-soft: rgb(74 134 245 / 0.14);
+  --red-soft: rgb(236 90 95 / 0.14);
+  --yellow-soft: rgb(242 182 50 / 0.14);
+  --green-soft: rgb(52 171 114 / 0.14);
+
+  --steel: #8e99a8;      /* barbell */
+  --overlay: rgb(10 13 18 / 0.66);
+  --shadow-pop: 0 18px 50px rgb(0 0 0 / 0.45);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --surface-2: #f5f7fa;
+  --line: #d8dee7;
+  --line-strong: #b9c2cf;
+  --text: #1a1f27;
+  --muted: #5b6676;
+
+  --blue: #2563d9;
+  --blue-ink: #ffffff;
+  --red: #d33a40;
+  --yellow: #b97f00;
+  --green: #1d8a55;
+
+  --blue-soft: rgb(37 99 217 / 0.1);
+  --red-soft: rgb(211 58 64 / 0.1);
+  --yellow-soft: rgb(242 182 50 / 0.18);
+  --green-soft: rgb(29 138 85 / 0.1);
+
+  --steel: #6b7787;
+  --overlay: rgb(26 31 39 / 0.45);
+  --shadow-pop: 0 18px 50px rgb(26 31 39 / 0.18);
+}
+
+:root {
+  --font: 'Archivo Variable', 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --r-lg: 16px;   /* panels */
+  --r-md: 10px;   /* inputs, buttons */
+  --r-pill: 999px;
+
+  --sidebar: 248px;
+  --bottom-nav: 64px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.15;
+  font-weight: 750;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem);
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.15rem;
+  font-stretch: 108%;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--blue-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Big condensed numbers: kcal, kg, counts */
+.num {
+  font-stretch: 75%;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Page layout ---------- */
+.page {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: clamp(20px, 2.4vw, 40px) clamp(20px, 3vw, 48px) 48px;
+  display: grid;
+  gap: clamp(18px, 1.8vw, 28px);
+}
+
+/* big monitors: slightly larger text */
+@media (min-width: 1600px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 20px;
+}
+
+.page-head p {
+  color: var(--muted);
+  margin-top: 6px;
+  max-width: 62ch;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 16px 32px;
+    gap: 18px;
+  }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 20px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: var(--surface-2);
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--blue-ink);
+}
+
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--blue) 88%, black);
+}
+
+.btn-danger {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn-danger:hover {
+  background: var(--red-soft);
+}
+
+.btn-danger-solid {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.btn-danger-solid:hover {
+  background: color-mix(in srgb, var(--red) 88%, black);
+}
+
+.btn-ghost {
+  border-color: transparent;
+}
+
+.btn-sm {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 0.875rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.icon-btn.danger:hover {
+  color: var(--red);
+  background: var(--red-soft);
+}
+
+/* ---------- Forms ---------- */
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field > span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.field small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.field .error {
+  color: var(--red);
+  font-size: 0.82rem;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-color: var(--line-strong);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: var(--surface);
+}
+
+.input.ng-invalid.ng-touched,
+.select.ng-invalid.ng-touched,
+.textarea.ng-invalid.ng-touched {
+  border-color: var(--red);
+}
+
+.form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.form-error {
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 0.9rem;
+}
+
+/* ---------- Chips & badges ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border-radius: var(--r-pill);
+  font-size: 0.78rem;
+  font-weight: 650;
+  background: var(--surface-2);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.badge-blue { background: var(--blue-soft); color: var(--blue); }
+.badge-red { background: var(--red-soft); color: var(--red); }
+.badge-yellow { background: var(--yellow-soft); color: var(--yellow); }
+.badge-green { background: var(--green-soft); color: var(--green); }
+
+/* ---------- Tables (become stacked rows on phones) ---------- */
+.table-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.table th {
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+
+.table tr:last-child td {
+  border-bottom: 0;
+}
+
+.table .actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .table tr:last-child {
+    border-bottom: 0;
+  }
+
+  .table td {
+    border: 0;
+    padding: 3px 0;
+  }
+
+  .table td[data-label]::before {
+    content: attr(data-label);
+    display: inline-block;
+    min-width: 96px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .table .actions {
+    text-align: left;
+    padding-top: 8px;
+  }
+}
+
+/* ---------- Empty & loading states ---------- */
+.empty {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding: 28px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-lg);
+  color: var(--muted);
+}
+
+.empty h3 {
+  color: var(--text);
+}
+
+.skeleton {
+  border-radius: var(--r-lg);
+  background: linear-gradient(90deg, var(--surface) 0%, var(--surface-2) 50%, var(--surface) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+  min-height: 72px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Difficulty: plate colours ---------- */
+.diff-beginner { --diff: var(--green); }
+.diff-intermediate { --diff: var(--yellow); }
+.diff-advanced { --diff: var(--red); }

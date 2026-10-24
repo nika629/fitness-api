@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <title>Fitness</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Plan workouts, browse exercises and log what you eat.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>
+    // Apply the saved theme before Angular starts, so the page doesn't flash
+    try {
+      var t = localStorage.getItem('fitness.theme');
+      if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

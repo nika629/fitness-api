@@ -1,8 +1,8 @@
 # Fitness API
 
-ფიტნეს აპლიკაციის ბექენდი: მომხმარებლები, ვარჯიშის გეგმები, ვარჯიშების კატალოგი, ფავორიტები და კვების დღიური (კალორიები, ცილა, ნახშირწყლები, ცხიმი).
+ფიტნეს აპლიკაცია (ბექენდი + Angular ფრონტენდი): მომხმარებლები, ვარჯიშის გეგმები, ვარჯიშების კატალოგი, ფავორიტები და კვების დღიური (კალორიები, ცილა, ნახშირწყლები, ცხიმი).
 
-**ტექნოლოგიები:** C#, ASP.NET Core Web API (.NET 10), Entity Framework Core 10, PostgreSQL (DigitalOcean Managed Database), JWT, Swagger, xUnit, GitHub Actions, DigitalOcean Droplet (Ubuntu + Nginx).
+**ტექნოლოგიები:** Angular 21 (ფრონტენდი), C#, ASP.NET Core Web API (.NET 10), Entity Framework Core 10, PostgreSQL (DigitalOcean Managed Database), JWT, Swagger, xUnit, GitHub Actions, DigitalOcean Droplet (Ubuntu + Nginx).
 
 ---
 
@@ -18,6 +18,7 @@ WebApplicationAPI.slnx
 │   │   └── Services/           ← სერვისები და DTO-ები
 │   └── Migrations/             ← EF Core მიგრაციები
 ├── WebApplicationAPI.Tests/    ← Unit ტესტები (xUnit + EF InMemory)
+├── fitness-web/                ← Angular ფრონტენდი (იხ. fitness-web/README.md)
 ├── database/                   ← SQL script-ები (seed.sql)
 ├── deploy/                     ← სერვერის ფაილები (systemd, nginx, env მაგალითი)
 └── .github/workflows/ci-cd.yml ← CI/CD pipeline
@@ -146,7 +147,7 @@ SQL script-ები: [`database/`](database/README.md).
 * **ბიზნეს შეცდომები** ერთნაირი ფორმით ბრუნდება: `{ "message": "..." }` და სწორი სტატუს კოდი:
   `400` არასწორი მონაცემი · `401` არასწორი ელფოსტა/პაროლი · `403` სხვისი მონაცემი · `404` ვერ მოიძებნა · `409` დუბლიკატი.
 * **მოულოდნელი შეცდომები:** გლობალური `UseExceptionHandler` შეცდომას წერს ლოგში (`ILogger`) და კლიენტს უბრუნებს `500 { "message": "An unexpected error occurred." }`, stack trace-ის გარეშე.
-* **ლოგები სერვერზე:** `journalctl -u fitnessapi -f`.
+* **ლოგები სერვერზე:** `journalctl -u myapp -f`.
 
 ---
 
@@ -161,9 +162,9 @@ SQL script-ები: [`database/`](database/README.md).
 
 ფაილი: `.github/workflows/ci-cd.yml`
 
-1. **CI (ყოველ push-ზე და pull request-ზე):** restore → build → **tests** → publish (linux-x64, self-contained).
-2. **CD (მხოლოდ `main`-ზე push-ისას, თუ ტესტები გავიდა):** build-ი SSH-ით (`rsync`) აიტვირთება Droplet-ზე `/var/www/fitnessapi`-ში, `fitnessapi` systemd სერვისი გადაიტვირთება და მოწმდება `/health`.
+1. **CI (ყოველ push-ზე და pull request-ზე):** API: restore → build → **tests** → publish. Web: `npm ci` → `npm run build`.
+2. **CD (მხოლოდ `main`-ზე push-ისას, თუ ტესტები გავიდა):** API SSH-ით (`rsync`) აიტვირთება `/var/www/myapp`-ში, ფრონტენდი `/var/www/fitness-web`-ში, Nginx-ის კონფიგი (`deploy/nginx-myapp.conf`) განახლდება, `myapp` systemd სერვისი გადაიტვირთება და მოწმდება `/health`.
 
 **GitHub Secrets:** `SSH_PRIVATE_KEY`, `SERVER_HOST`, `SERVER_USER`.
 
-**სერვერი:** Nginx (port 80) → Kestrel (`localhost:5000`). საიდუმლოები (ბაზის პაროლი, JWT key) Git-ში **არ ინახება**: სერვერზე ისინი `/etc/fitnessapi.env`-შია (მაგალითი: `deploy/fitnessapi.env.example`) და `appsettings.json`-ს environment variable-ით ცვლის (`ConnectionStrings__DefaultConnection`, `Jwt__Key`).
+**სერვერი:** Nginx (port 80): `/` → Angular, `/api`, `/swagger`, `/health` → Kestrel (`127.0.0.1:5000`). საიტი: http://143.244.165.211. საიდუმლოები (ბაზის პაროლი, JWT key) Git-ში **არ ინახება**: სერვერზე ისინი `/etc/myapp/myapp.env`-შია (მაგალითი: `deploy/myapp.env.example`) და `appsettings.json`-ს environment variable-ით ცვლის (`ConnectionStrings__DefaultConnection`, `Jwt__Key`).

@@ -1,0 +1,181 @@
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kcal {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 8px;
+}
+
+.kcal .num {
+  font-size: clamp(3rem, 2rem + 4vw, 4.6rem);
+}
+
+.hint {
+  margin-top: 14px;
+}
+
+.stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.big {
+  font-size: 3.2rem;
+}
+
+.goal {
+  color: var(--blue);
+}
+
+.unit {
+  margin-left: 4px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.weight {
+  display: flex;
+  flex-direction: column;
+}
+
+.togo {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.togo strong {
+  color: var(--text);
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.rows li + li {
+  border-top: 1px solid var(--line);
+}
+
+.rows a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.rows a:hover .row-title {
+  color: var(--blue);
+}
+
+.row-title {
+  font-weight: 650;
+}
+
+.bmi {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+/* bathroom-scale ruler at the bottom of the weight card */
+.ruler {
+  position: relative;
+  height: 56px;
+  margin: auto 6px 22px;
+  border-bottom: 2px solid var(--line-strong);
+}
+
+.band {
+  position: absolute;
+  bottom: 0;
+  height: 8px;
+  border-radius: 4px 4px 0 0;
+  background: var(--blue-soft);
+}
+
+.tick {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  height: 8px;
+  background: var(--line-strong);
+}
+
+.tick.major {
+  height: 14px;
+  background: var(--muted);
+}
+
+.tick small {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.pin {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.pin b {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.74rem;
+  white-space: nowrap;
+}
+
+.now-pin {
+  background: var(--text);
+}
+
+.now-pin b {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.goal-pin {
+  background: var(--blue);
+}
+
+.goal-pin b {
+  background: var(--blue);
+  color: var(--blue-ink);
+}

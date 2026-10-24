@@ -1,0 +1,163 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>{{ greeting }}, {{ auth.userName() }}</h1>
+      <p>{{ today | date: 'EEEE, d MMMM' }}</p>
+    </div>
+    <div class="form-actions">
+      <a class="btn" routerLink="/plans">
+        <app-icon name="plans" [size]="18" />
+        Plans
+      </a>
+      <a class="btn btn-primary" routerLink="/food">
+        <app-icon name="plus" [size]="18" />
+        Log food
+      </a>
+    </div>
+  </header>
+
+  <div class="top">
+    <!-- Today's food: the barbell -->
+    <section class="panel food" aria-labelledby="today-food">
+      <div class="panel-head">
+        <h2 id="today-food">Today's food</h2>
+        <a routerLink="/food">Open food log</a>
+      </div>
+
+      @if (loading()) {
+        <div class="skeleton" style="min-height: 220px"></div>
+      } @else {
+        <p class="kcal">
+          <span class="num">{{ totals().calories | number: '1.0-0' }}</span>
+          <span class="muted">kcal from {{ todayLogs().length }} {{ todayLogs().length === 1 ? 'entry' : 'entries' }}</span>
+        </p>
+        <app-barbell [macros]="totals()" />
+        @if (todayLogs().length === 0) {
+          <p class="muted hint">Nothing logged yet today. <a routerLink="/food">Add your first meal</a>.</p>
+        }
+      }
+    </section>
+
+    <!-- Body weight -->
+    <section class="panel weight" aria-labelledby="weight-title">
+      <div class="panel-head">
+        <h2 id="weight-title">Body weight</h2>
+        <a routerLink="/profile">Edit</a>
+      </div>
+
+      @if (loading()) {
+        <div class="skeleton" style="min-height: 160px"></div>
+      } @else if (profile()?.currentWeight) {
+        <div class="stats">
+          <div>
+            <span class="label">Now</span>
+            <span class="num big">{{ profile()!.currentWeight }}</span><span class="unit">kg</span>
+          </div>
+          @if (profile()!.goalWeight) {
+            <div>
+              <span class="label">Goal</span>
+              <span class="num big goal">{{ profile()!.goalWeight }}</span><span class="unit">kg</span>
+            </div>
+          }
+        </div>
+        @if (toGo() !== null) {
+          <p class="togo">
+            @if (toGo() === 0) {
+              You've reached your goal weight.
+            } @else if (toGo()! > 0) {
+              <strong>{{ toGo() }} kg</strong> to lose to reach your goal.
+            } @else {
+              <strong>{{ abs(toGo()!) }} kg</strong> to gain to reach your goal.
+            }
+          </p>
+        } @else {
+          <p class="muted">Add a goal weight in your profile to track progress.</p>
+        }
+        @if (bmi()) {
+          <p class="muted bmi">BMI {{ bmi() }} at {{ profile()!.height }} cm</p>
+        }
+        @if (ruler(); as r) {
+          <div class="ruler" role="img" [attr.aria-label]="'Scale from ' + r.lo + ' to ' + r.hi + ' kg'">
+            <div class="band" [style.left.%]="r.now < r.goal ? r.now : r.goal" [style.width.%]="(r.now < r.goal ? r.goal - r.now : r.now - r.goal)"></div>
+            @for (t of r.ticks; track t.kg) {
+              <span class="tick" [class.major]="t.major" [style.left.%]="t.left">
+                @if (t.major) {
+                  <small>{{ t.kg }}</small>
+                }
+              </span>
+            }
+            <span class="pin goal-pin" [style.left.%]="r.goal"><b>Goal</b></span>
+            <span class="pin now-pin" [style.left.%]="r.now"><b>Now</b></span>
+          </div>
+        }
+      } @else {
+        <div class="empty">
+          <app-icon name="scale" [size]="28" />
+          <h3>No weight yet</h3>
+          <p>Add your current and goal weight to see how far you have to go.</p>
+          <a class="btn btn-sm" routerLink="/profile">Add weight</a>
+        </div>
+      }
+    </section>
+  </div>
+
+  <div class="grid-2">
+    <!-- Plans -->
+    <section class="panel" aria-labelledby="plans-title">
+      <div class="panel-head">
+        <h2 id="plans-title">Your plans</h2>
+        <a routerLink="/plans">All plans</a>
+      </div>
+
+      @if (loading()) {
+        <div class="skeleton"></div>
+      } @else if (plans().length === 0) {
+        <div class="empty">
+          <h3>No plans yet</h3>
+          <p>Group exercises into a plan, like "Push day" or "Full body".</p>
+          <a class="btn btn-sm btn-primary" routerLink="/plans">Create a plan</a>
+        </div>
+      } @else {
+        <ul class="rows">
+          @for (plan of plans().slice(0, 4); track plan.workoutPlanID) {
+            <li>
+              <a [routerLink]="['/plans', plan.workoutPlanID]">
+                <span class="row-title">{{ plan.workoutPlanName }}</span>
+                <span class="muted">{{ plan.exerciseCount }} {{ plan.exerciseCount === 1 ? 'exercise' : 'exercises' }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <!-- Favorites -->
+    <section class="panel" aria-labelledby="fav-title">
+      <div class="panel-head">
+        <h2 id="fav-title">Favorite exercises</h2>
+        <a routerLink="/favorites">All favorites</a>
+      </div>
+
+      @if (favorites.loading()) {
+        <div class="skeleton"></div>
+      } @else if (favorites.items().length === 0) {
+        <div class="empty">
+          <h3>No favorites yet</h3>
+          <p>Tap the heart on any exercise to keep it here.</p>
+          <a class="btn btn-sm" routerLink="/exercises">Browse exercises</a>
+        </div>
+      } @else {
+        <ul class="rows">
+          @for (fav of favorites.items().slice(0, 4); track fav.exerciseID) {
+            <li>
+              <a routerLink="/favorites">
+                <span class="row-title">{{ fav.exerciseName }}</span>
+                <span class="muted">{{ fav.muscleGroupName }}</span>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </div>
+</div>

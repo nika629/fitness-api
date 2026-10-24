@@ -1,0 +1,72 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>Workout plans</h1>
+      <p>Each plan is a list of exercises with sets, reps and rest time.</p>
+    </div>
+    <button class="btn btn-primary" type="button" (click)="openCreate()">
+      <app-icon name="plus" [size]="18" />
+      New plan
+    </button>
+  </header>
+
+  @if (loading()) {
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  } @else if (error()) {
+    <p class="form-error" role="alert">{{ error() }}</p>
+  } @else if (plans().length === 0) {
+    <div class="empty">
+      <app-icon name="plans" [size]="28" />
+      <h3>No plans yet</h3>
+      <p>Start with one plan, like "Push day" or "Full body", then add exercises to it.</p>
+      <button class="btn btn-primary btn-sm" type="button" (click)="openCreate()">Create your first plan</button>
+    </div>
+  } @else {
+    <ul class="plan-list">
+      @for (plan of plans(); track plan.workoutPlanID) {
+        <li>
+          <a class="plan" [routerLink]="['/plans', plan.workoutPlanID]">
+            <span class="count">
+              <span class="num">{{ plan.exerciseCount }}</span>
+              <small>{{ plan.exerciseCount === 1 ? 'exercise' : 'exercises' }}</small>
+            </span>
+            <span class="info">
+              <strong>{{ plan.workoutPlanName }}</strong>
+              @if (plan.workoutPlanDescription) {
+                <span class="muted">{{ plan.workoutPlanDescription }}</span>
+              }
+            </span>
+            <span class="date muted">Created {{ plan.createdAt | date: 'd MMM y' }}</span>
+            <app-icon name="right" class="chev" />
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</div>
+
+@if (creating()) {
+  <app-modal title="New plan" (closed)="creating.set(false)">
+    <form class="form-grid" [formGroup]="form" (ngSubmit)="create()" novalidate>
+      @if (formError()) {
+        <p class="form-error" role="alert">{{ formError() }}</p>
+      }
+      <label class="field">
+        <span>Name</span>
+        <input class="input" formControlName="workoutPlanName" placeholder="Push day" />
+        @if (form.controls.workoutPlanName.touched && form.controls.workoutPlanName.invalid) {
+          <span class="error">Give the plan a name.</span>
+        }
+      </label>
+      <label class="field">
+        <span>Description <small>(optional)</small></span>
+        <textarea class="textarea" formControlName="workoutPlanDescription" placeholder="Chest, shoulders and triceps"></textarea>
+      </label>
+      <div class="form-actions">
+        <button class="btn" type="button" (click)="creating.set(false)">Cancel</button>
+        <button class="btn btn-primary" type="submit" [disabled]="saving()">{{ saving() ? 'Creating…' : 'Create plan' }}</button>
+      </div>
+    </form>
+  </app-modal>
+}

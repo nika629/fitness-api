@@ -1,0 +1,83 @@
+.day-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.day {
+  min-width: 110px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kcal {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.kcal .num {
+  font-size: clamp(3rem, 2rem + 4vw, 4.4rem);
+}
+
+.add-form {
+  margin-top: 14px;
+}
+
+.name-time {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 150px);
+  gap: 14px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.macros {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .macros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* the plate colour marks which macro an input is */
+.m-protein .input { border-left: 4px solid var(--red); }
+.m-carbs .input { border-left: 4px solid var(--yellow); }
+.m-fat .input { border-left: 4px solid var(--green); }
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 8px;
+}

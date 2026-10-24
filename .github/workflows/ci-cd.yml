@@ -12,8 +12,9 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
+  # ---------- CI 1: API – build, test, publish ----------
   build-and-test:
-    name: Build & Test
+    name: API – Build & Test
     runs-on: ubuntu-latest
 
     steps:
@@ -34,28 +35,74 @@ jobs:
       - name: Run tests
         run: dotnet test WebApplicationAPI.slnx -c Release --no-build --verbosity normal
 
+      # The server already has the .NET 10 runtime, so a small framework-dependent build is enough
       - name: Publish
         run: dotnet publish WebApplicationAPI/WebApplicationAPI.csproj -c Release -o publish
 
-      - name: Upload build artifact
+      - name: Upload API build
         uses: actions/upload-artifact@v4
         with:
           name: api
           path: publish
           retention-days: 7
 
-  deploy:
-    name: Deploy to Droplet
-    needs: build-and-test
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+  # ---------- CI 2: Angular frontend – build ----------
+  build-web:
+    name: Web – Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fitness-web
 
     steps:
-      - name: Download build artifact
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: fitness-web/package-lock.json
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Build (production)
+        run: npm run build
+
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: fitness-web/dist/fitness-web/browser
+          retention-days: 7
+
+  # ---------- CD: deploy both to the DigitalOcean Droplet (only from main) ----------
+  deploy:
+    name: Deploy to Droplet
+    needs: [build-and-test, build-web]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: http://143.244.165.211
+
+    steps:
+      - name: Checkout code (for the Nginx config)
+        uses: actions/checkout@v4
+
+      - name: Download API build
         uses: actions/download-artifact@v4
         with:
           name: api
           path: publish
+
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: web
 
       - name: Set up SSH key
         run: |
@@ -64,18 +111,36 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Copy files to the server
+      # Secrets (DB password, JWT key) stay on the server in /etc/myapp/myapp.env
+      - name: Copy API to the server
         run: |
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" \
             publish/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/myapp/"
 
-      - name: Restart the API and check health
+      - name: Copy web app and Nginx config to the server
+        run: |
+          ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" 'mkdir -p /var/www/fitness-web'
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" \
+            web/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/fitness-web/"
+          rsync -az -e "ssh -i ~/.ssh/deploy_key" \
+            deploy/nginx-myapp.conf "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/etc/nginx/sites-enabled/myapp"
+
+      - name: Restart and check health
         run: |
           ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" '
             set -e
             chown -R deploy:deploy /var/www/myapp
+            chmod -R a+rX /var/www/fitness-web
+            # Nginx's default "Welcome" site would otherwise answer on the IP instead of our app
+            rm -f /etc/nginx/sites-enabled/default
             systemctl restart myapp
+            nginx -t
+            systemctl reload nginx
             curl -fsS --retry 10 --retry-delay 3 --retry-connrefused http://127.0.0.1:5000/health
+            echo ""
+            curl -fsS http://127.0.0.1/ | grep -q "<app-root>"
+            echo "Web OK"
+            curl -fsS http://127.0.0.1/health
             echo ""
             echo "Deploy OK"
           '

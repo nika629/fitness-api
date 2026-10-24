@@ -1,0 +1,137 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>Profile</h1>
+      @if (profile(); as p) {
+        <p>Signed in as {{ p.userEmail }}. Member since {{ p.createdAt | date: 'MMMM y' }}.</p>
+      }
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="skeleton" style="min-height: 320px"></div>
+  } @else {
+    <section class="panel" aria-labelledby="details-title">
+      <h2 id="details-title">Personal details</h2>
+      <form class="form-grid" [formGroup]="details" (ngSubmit)="saveDetails()" novalidate>
+        @if (detailsError()) {
+          <p class="form-error" role="alert">{{ detailsError() }}</p>
+        }
+        <div class="form-row">
+          <label class="field">
+            <span>First name</span>
+            <input class="input" formControlName="userName" autocomplete="given-name" />
+          </label>
+          <label class="field">
+            <span>Last name</span>
+            <input class="input" formControlName="userLastName" autocomplete="family-name" />
+          </label>
+        </div>
+        <div class="form-row">
+          <label class="field">
+            <span>Phone</span>
+            <input class="input" type="tel" formControlName="userPhone" autocomplete="tel" />
+          </label>
+          <label class="field">
+            <span>Date of birth</span>
+            <input class="input" type="date" formControlName="birthDate" />
+          </label>
+        </div>
+
+        <h3 class="sub">Body</h3>
+        <div class="form-row body">
+          <label class="field">
+            <span>Height (cm)</span>
+            <input class="input" type="number" step="0.5" min="50" max="260" formControlName="height" />
+            @if (details.controls.height.invalid) {
+              <span class="error">Between 50 and 260 cm.</span>
+            }
+          </label>
+          <label class="field">
+            <span>Current weight (kg)</span>
+            <input class="input" type="number" step="0.1" min="20" max="400" formControlName="currentWeight" />
+            @if (details.controls.currentWeight.invalid) {
+              <span class="error">Between 20 and 400 kg.</span>
+            }
+          </label>
+          <label class="field">
+            <span>Goal weight (kg)</span>
+            <input class="input" type="number" step="0.1" min="20" max="400" formControlName="goalWeight" />
+            @if (details.controls.goalWeight.invalid) {
+              <span class="error">Between 20 and 400 kg.</span>
+            }
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" [disabled]="savingDetails() || details.pristine">
+            {{ savingDetails() ? 'Saving…' : 'Save details' }}
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <div class="grid-2">
+      <section class="panel" aria-labelledby="email-title">
+        <h2 id="email-title">Change email</h2>
+        <form class="form-grid" [formGroup]="email" (ngSubmit)="saveEmail()" novalidate>
+          @if (emailError()) {
+            <p class="form-error" role="alert">{{ emailError() }}</p>
+          }
+          <label class="field">
+            <span>New email</span>
+            <input class="input" type="email" formControlName="newEmail" autocomplete="email" />
+            @if (email.controls.newEmail.touched && email.controls.newEmail.invalid) {
+              <span class="error">Enter a valid email address.</span>
+            }
+          </label>
+          <label class="field">
+            <span>Current password</span>
+            <input class="input" type="password" formControlName="currentPassword" autocomplete="current-password" />
+          </label>
+          <div class="form-actions">
+            <button class="btn" type="submit" [disabled]="savingEmail()">{{ savingEmail() ? 'Saving…' : 'Change email' }}</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="password-title">
+        <h2 id="password-title">Change password</h2>
+        <form class="form-grid" [formGroup]="password" (ngSubmit)="savePassword()" novalidate>
+          @if (passwordError()) {
+            <p class="form-error" role="alert">{{ passwordError() }}</p>
+          }
+          <label class="field">
+            <span>Current password</span>
+            <input class="input" type="password" formControlName="currentPassword" autocomplete="current-password" />
+          </label>
+          <label class="field">
+            <span>New password</span>
+            <input class="input" type="password" formControlName="newPassword" autocomplete="new-password" />
+            @if (password.controls.newPassword.touched && password.controls.newPassword.invalid) {
+              <span class="error">Use at least 6 characters.</span>
+            }
+          </label>
+          <label class="field">
+            <span>Repeat new password</span>
+            <input class="input" type="password" formControlName="confirmNewPassword" autocomplete="new-password" />
+            @if (password.hasError('mismatch') && password.controls.confirmNewPassword.touched) {
+              <span class="error">The passwords don't match.</span>
+            }
+          </label>
+          <div class="form-actions">
+            <button class="btn" type="submit" [disabled]="savingPassword()">{{ savingPassword() ? 'Saving…' : 'Change password' }}</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section class="panel danger" aria-labelledby="danger-title">
+      <div>
+        <h2 id="danger-title">Delete account</h2>
+        <p class="muted">Removes your profile, plans, favorites and food log for good.</p>
+      </div>
+      <button class="btn btn-danger" type="button" (click)="deleteAccount()">Delete account</button>
+    </section>
+  }
+</div>
