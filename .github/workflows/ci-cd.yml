@@ -131,8 +131,8 @@ jobs:
             set -e
             chown -R deploy:deploy /var/www/myapp
             chmod -R a+rX /var/www/fitness-web
-            # Nginx's default "Welcome" site would otherwise answer on the IP instead of our app
-            rm -f /etc/nginx/sites-enabled/default
+            
+            
             systemctl restart myapp
             nginx -t
             systemctl reload nginx
