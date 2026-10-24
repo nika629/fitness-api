@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
 using WebApplicationLB.Domain.Entities;
 using WebApplicationLB.Infrastructure.DataBase;
@@ -15,148 +15,87 @@ namespace WebApplicationLB.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<ServiceResponse<List<WorkoutPlanResposneDTO>>> GetAllWorkoutPlanByUser(int userID)
-        {
-            var result = new ServiceResponse<List<WorkoutPlanResposneDTO>>();
-
-            var workoutPlans = await _context.WorkoutPlans.Where(u => u.UserID == userID)
+        private IQueryable<WorkoutPlanResposneDTO> QueryForUser(int userID) =>
+            _context.WorkoutPlans
+                .Where(p => p.UserID == userID)
                 .Select(p => new WorkoutPlanResposneDTO
                 {
                     WorkoutPlanID = p.WorkoutPlanID,
                     WorkoutPlanName = p.WorkoutPlanName,
                     WorkoutPlanDescription = p.WorkoutPlanDescription,
                     UserId = p.UserID,
+                    ExerciseCount = p.WorkoutExercises.Count,
                     CreatedAt = p.CreatedAt,
                     UpdatedAt = p.UpdatedAt
-                }).ToListAsync();
+                });
 
-            if(workoutPlans == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(WorkoutPlanService)}.{nameof(GetAllWorkoutPlanByUser)} - ERROR: Couldn't get all wokout plan.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = workoutPlans;
-            }
+        public async Task<ServiceResponse<List<WorkoutPlanResposneDTO>>> GetAllWorkoutPlanByUser(int userID)
+        {
+            var plans = await QueryForUser(userID)
+                .OrderByDescending(p => p.CreatedAt)
+                .ToListAsync();
 
-            return result;
+            return ServiceResponse<List<WorkoutPlanResposneDTO>>.Success(plans);
         }
 
-        public async Task<ServiceResponse<WorkoutPlanResposneDTO>> GetWorkoutPlanByID(int workoutPlanID, int requestingUserID)
+        public async Task<ServiceResponse<WorkoutPlanResposneDTO>> GetWorkoutPlanByID(int workoutPlanID, int userID)
         {
-            var result = new ServiceResponse<WorkoutPlanResposneDTO>();
+            var plan = await QueryForUser(userID)
+                .FirstOrDefaultAsync(p => p.WorkoutPlanID == workoutPlanID);
 
-            var workoutPlan = await _context.WorkoutPlans
-        .FirstOrDefaultAsync(p => p.WorkoutPlanID == workoutPlanID);
-
-            if (workoutPlan == null || workoutPlan.UserID != requestingUserID)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(WorkoutPlanService)}.{nameof(GetWorkoutPlanByID)} - ERROR: Couldn't get workout plan by ID.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = new WorkoutPlanResposneDTO
-                {
-                    WorkoutPlanID = workoutPlan.WorkoutPlanID,
-                    WorkoutPlanName = workoutPlan.WorkoutPlanName,
-                    WorkoutPlanDescription = workoutPlan.WorkoutPlanDescription,
-                    UserId = workoutPlan.UserID,
-                    CreatedAt = workoutPlan.CreatedAt,
-                    UpdatedAt = workoutPlan.UpdatedAt
-                };
-            }
-
-            return result;
+            return plan == null
+                ? ServiceResponse<WorkoutPlanResposneDTO>.NotFound("Workout plan not found.")
+                : ServiceResponse<WorkoutPlanResposneDTO>.Success(plan);
         }
 
-        public async Task<ServiceResponse<WorkoutPlanResposneDTO>> CreateWorkoutPlan(int UserdId ,CreateWorkoutPlanDTO Cdto)
+        public async Task<ServiceResponse<WorkoutPlanResposneDTO>> CreateWorkoutPlan(int userID, CreateWorkoutPlanDTO dto)
         {
-            var result = new ServiceResponse<WorkoutPlanResposneDTO>();
-
-            var newWorkoutPlan = new WorkoutPlan
+            var newPlan = new WorkoutPlan
             {
-                WorkoutPlanName = Cdto.WorkoutPlanName,
-                WorkoutPlanDescription = Cdto.WorkoutPlanDescription,
-                UserID = UserdId,
-                CreatedAt = DateTime.Now
-
+                WorkoutPlanName = dto.WorkoutPlanName.Trim(),
+                WorkoutPlanDescription = dto.WorkoutPlanDescription.Trim(),
+                UserID = userID,
+                CreatedAt = DateTime.UtcNow
             };
 
-            if (newWorkoutPlan == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(WorkoutPlanService)}.{nameof(CreateWorkoutPlan)} - ERROR: Couldn't create workoutplan.";
-            }
-            else
-            {
-                _context.WorkoutPlans.Add(newWorkoutPlan);
-                await _context.SaveChangesAsync();
+            _context.WorkoutPlans.Add(newPlan);
+            await _context.SaveChangesAsync();
 
-                result.IsSuccessful = true;
-                result.Data = new WorkoutPlanResposneDTO
-                {
-                    WorkoutPlanID = newWorkoutPlan.WorkoutPlanID,
-                    WorkoutPlanName = newWorkoutPlan.WorkoutPlanName,
-                    WorkoutPlanDescription = newWorkoutPlan.WorkoutPlanDescription,
-                    UserId = newWorkoutPlan.UserID,
-                    CreatedAt = newWorkoutPlan.CreatedAt,
-                    UpdatedAt = newWorkoutPlan.UpdatedAt
-                };
-            }
-
-
-
-            return result;
+            return await GetWorkoutPlanByID(newPlan.WorkoutPlanID, userID);
         }
 
-        public async Task<ServiceResponse<WorkoutPlanResposneDTO>> UpdateWorkoutPlan(int planID, int requestingUserID, UpdateWorkoutPlanDTO dto)
+        public async Task<ServiceResponse<WorkoutPlanResposneDTO>> UpdateWorkoutPlan(int planID, int userID, UpdateWorkoutPlanDTO dto)
         {
-            var result = new ServiceResponse<WorkoutPlanResposneDTO>();
+            var plan = await _context.WorkoutPlans
+                .FirstOrDefaultAsync(p => p.WorkoutPlanID == planID && p.UserID == userID);
 
-            var plan = await _context.WorkoutPlans.FirstOrDefaultAsync(i => i.WorkoutPlanID == planID);
-
-            if (plan != null || plan.UserID == requestingUserID)
+            if (plan == null)
             {
-                plan.WorkoutPlanName = dto.WorkoutPlanName;
-                plan.WorkoutPlanDescription = dto.WorkoutPlanDescription;
-                plan.UpdatedAt = DateTime.UtcNow;
-
-                await _context.SaveChangesAsync();
-
-                result.IsSuccessful = true;
-                result.Data = new WorkoutPlanResposneDTO
-                {
-                    WorkoutPlanID = plan.WorkoutPlanID,
-                    WorkoutPlanName = plan.WorkoutPlanName,
-                    WorkoutPlanDescription = plan.WorkoutPlanDescription,
-                    UserId = plan.UserID,
-                    CreatedAt = plan.CreatedAt,
-                    UpdatedAt = plan.UpdatedAt
-
-                };
-            }
-            else
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(WorkoutPlanService)}.{nameof(UpdateWorkoutPlan)} - ERROR: couldn.t update workoutplan.";
+                return ServiceResponse<WorkoutPlanResposneDTO>.NotFound("Workout plan not found.");
             }
 
-            return result;
+            plan.WorkoutPlanName = dto.WorkoutPlanName.Trim();
+            plan.WorkoutPlanDescription = dto.WorkoutPlanDescription.Trim();
+            plan.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return await GetWorkoutPlanByID(plan.WorkoutPlanID, userID);
         }
 
-        public async Task DeleteWorkoutPlan(int userID, int planId)
+        public async Task<ServiceResponse<bool>> DeleteWorkoutPlan(int userID, int planID)
         {
-            var plan = await _context.WorkoutPlans.FirstOrDefaultAsync(u => u.WorkoutPlanID == planId);
+            var plan = await _context.WorkoutPlans
+                .FirstOrDefaultAsync(p => p.WorkoutPlanID == planID && p.UserID == userID);
 
-            if(plan != null && plan.UserID == userID)
+            if (plan == null)
             {
-                _context.WorkoutPlans.Remove(plan);
-                await _context.SaveChangesAsync();
+                return ServiceResponse<bool>.NotFound("Workout plan not found.");
             }
+
+            _context.WorkoutPlans.Remove(plan);
+            await _context.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
+using WebApplicationLB.Domain.Constants;
+using WebApplicationLB.Domain.Entities;
 using WebApplicationLB.Infrastructure.DataBase;
 using WebApplicationLB.Infrastructure.Services.Users;
 
@@ -14,180 +16,156 @@ namespace WebApplicationLB.Infrastructure.Services
             _dbContext = dbContext;
         }
 
+        public async Task<ServiceResponse<List<UserResponseDTO>>> GetAllUsers()
+        {
+            var users = await _dbContext.Users
+                .Include(u => u.DictionaryRole)
+                .OrderBy(u => u.UserID)
+                .ToListAsync();
+
+            return ServiceResponse<List<UserResponseDTO>>.Success(users.Select(ToDto).ToList());
+        }
 
         public async Task<ServiceResponse<bool>> AssignRole(int userID, int roleID)
         {
-            var result = new ServiceResponse<bool>();
-
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserID == userID);
-
             if (user == null)
             {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(UserService)}.{nameof(AssignRole)} - ERROR: User with ID {userID} not found.";
+                return ServiceResponse<bool>.NotFound($"User with ID {userID} not found.");
             }
-            else
+
+            // roleID is the DictionaryID of a role row (Admin = 1, User = 2)
+            var roleExists = await _dbContext.Dictionaries
+                .AnyAsync(r => r.DictionaryID == roleID && r.DictionaryGroupIntCode == DictionaryGroups.Roles);
+            if (!roleExists)
             {
-                var existedRole = await _dbContext.Dictionaries.AnyAsync(r => r.DictionaryID == roleID);
-
-                if (!existedRole)
-                {
-                    result.IsSuccessful = false;
-                    result.ErrorMessage = $"{nameof(UserService)}.{nameof(AssignRole)} - ERROR: Role with ID {roleID} not found.";
-                }
-                else
-                {
-                    user.UserDictionaryRoleID = roleID;
-                    user.UpdatedAt = DateTime.UtcNow;
-
-                    await _dbContext.SaveChangesAsync();
-
-                    result.IsSuccessful = true;
-                    result.Data = true;
-                }
+                return ServiceResponse<bool>.Fail($"Role with ID {roleID} not found.");
             }
 
-            return result;
+            user.UserDictionaryRoleID = roleID;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
         }
 
-
-
-        public async Task<ServiceResponse<UserResponseDTO?>> GetUserById(int userID)
+        public async Task<ServiceResponse<UserResponseDTO>> GetUserById(int userID)
         {
-            var result = new ServiceResponse<UserResponseDTO?>();
-
             var user = await _dbContext.Users
                 .Include(u => u.DictionaryRole)
                 .FirstOrDefaultAsync(u => u.UserID == userID);
 
             if (user == null)
             {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(UserService)}.{nameof(GetUserById)} - ERROR: Couldnt get user by ID.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = new UserResponseDTO
-                {
-                    UserID = user.UserID,
-                    UserName = user.UserName,
-                    UserLastName = user.UserLastName,
-                    UserPhone = user.UserPhone,
-                    UserRoleName = user.DictionaryRole?.DictionaryCaption ?? "No Role Assigned",
-                    UserEmail = user.UserEmail,
-                    UserAge = user.UserAge,
-                    CurrentWeight = user.CurrentWeight,
-                    BirthDate = user.BirthDate,
-                    Height = user.Height,
-                    GoalWeight = user.GoalWeight,
-                    CreatedAt = user.CreatedAt
-                };
+                return ServiceResponse<UserResponseDTO>.NotFound("User not found.");
             }
 
-            return result;
+            return ServiceResponse<UserResponseDTO>.Success(ToDto(user));
         }
-        public async Task<ServiceResponse<UserResponseDTO?>> UpdateUser(int userID, UserUpdateDTO Udto)
-        {
-            var result = new ServiceResponse<UserResponseDTO?>();
 
+        public async Task<ServiceResponse<UserResponseDTO>> UpdateUser(int userID, UserUpdateDTO dto)
+        {
             var user = await _dbContext.Users
                 .Include(u => u.DictionaryRole)
                 .FirstOrDefaultAsync(u => u.UserID == userID);
 
             if (user == null)
             {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(UserService)}.{nameof(UpdateUser)} - ERROR: Couldn't update user.";
-            }
-            else
-            {
-                user.UserName = Udto.UserName ?? user.UserName;
-                user.UserLastName = Udto.UserLastName ?? user.UserLastName;
-                user.UserPhone = Udto.UserPhone ?? user.UserPhone;
-                user.UserAge = Udto.UserAge ?? user.UserAge;
-                user.BirthDate = Udto.BirthDate ?? user.BirthDate;
-                user.Height = Udto.Height ?? user.Height;
-                user.CurrentWeight = Udto.CurrentWeight ?? user.CurrentWeight;
-                user.GoalWeight = Udto.GoalWeight ?? user.GoalWeight;
-                user.UpdatedAt = DateTime.UtcNow;
-
-                await _dbContext.SaveChangesAsync();
-
-                result.IsSuccessful = true;
-                result.Data = new UserResponseDTO
-                {
-                    UserID = user.UserID,
-                    UserName = user.UserName,
-                    UserLastName = user.UserLastName,
-                    UserPhone = user.UserPhone,
-                    UserRoleName = user.DictionaryRole?.DictionaryCaption ?? "No Role Assigned",
-                    UserEmail = user.UserEmail,
-                    UserAge = user.UserAge,
-                    CurrentWeight = user.CurrentWeight,
-                    BirthDate = user.BirthDate,
-                    Height = user.Height,
-                    GoalWeight = user.GoalWeight,
-                    CreatedAt = user.CreatedAt
-                };
+                return ServiceResponse<UserResponseDTO>.NotFound("User not found.");
             }
 
+            // Only overwrite the fields that were actually sent
+            if (!string.IsNullOrWhiteSpace(dto.UserName)) user.UserName = dto.UserName.Trim();
+            if (!string.IsNullOrWhiteSpace(dto.UserLastName)) user.UserLastName = dto.UserLastName.Trim();
+            if (dto.UserPhone != null) user.UserPhone = dto.UserPhone.Trim();
+            if (dto.UserAge.HasValue) user.UserAge = dto.UserAge;
+            if (dto.BirthDate.HasValue) user.BirthDate = DateTimeHelper.ToUtc(dto.BirthDate);
+            if (dto.Height.HasValue) user.Height = dto.Height;
+            if (dto.CurrentWeight.HasValue) user.CurrentWeight = dto.CurrentWeight;
+            if (dto.GoalWeight.HasValue) user.GoalWeight = dto.GoalWeight;
+            user.UpdatedAt = DateTime.UtcNow;
 
+            await _dbContext.SaveChangesAsync();
 
-            return result;
+            return ServiceResponse<UserResponseDTO>.Success(ToDto(user));
         }
 
-        public async Task ChangeUserEmail(int userID, ChangeUserEmailDTO Cdto)
-        {
-            var user = await _dbContext.Users.Include(u => u.DictionaryRole).FirstOrDefaultAsync(u => u.UserID == userID);
-
-            if(user != null)
-            {
-                var passordHash = BCrypt.Net.BCrypt.Verify(Cdto.CurrentPassword, user.UserPasswordHash);
-
-                if(passordHash)
-                {
-                    var emailTaken = await _dbContext.Users.AnyAsync(u => u.UserEmail == Cdto.NewEmail);
-
-                    if (emailTaken)
-                    {
-                        user.UserEmail = Cdto.NewEmail;
-                        user.UpdatedAt = DateTime.UtcNow;
-
-                        await _dbContext.SaveChangesAsync();
-                    }   
-                }
-            }
-        }
-
-
-        public async Task ChangeUserPassword(int userID, ChangeUserPasswordDTO Cdto)
-        {
-            var user = await _dbContext.Users.Include(u => u.DictionaryRole).FirstOrDefaultAsync(u => u.UserID == userID);
-
-            if (user != null)
-            {
-                var passordHash = BCrypt.Net.BCrypt.Verify(Cdto.CurrentPassword, user.UserPasswordHash);
-
-                if (passordHash)
-                {
-                    user.UserPasswordHash = BCrypt.Net.BCrypt.HashPassword(Cdto.NewPassword);
-                    user.UpdatedAt = DateTime.UtcNow;
-
-                    await _dbContext.SaveChangesAsync();
-                }
-            }
-        }
-
-        public async Task DeleteUser(int userID)
+        public async Task<ServiceResponse<bool>> ChangeUserEmail(int userID, ChangeUserEmailDTO dto)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserID == userID);
-
-            if (user != null)
+            if (user == null)
             {
-                _dbContext.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
+                return ServiceResponse<bool>.NotFound("User not found.");
             }
+
+            if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.UserPasswordHash))
+            {
+                return ServiceResponse<bool>.Fail("Current password is incorrect.");
+            }
+
+            var newEmail = dto.NewEmail.Trim().ToLowerInvariant();
+            var emailTaken = await _dbContext.Users
+                .AnyAsync(u => u.UserID != userID && u.UserEmail.ToLower() == newEmail);
+            if (emailTaken)
+            {
+                return ServiceResponse<bool>.Conflict("This email is already in use.");
+            }
+
+            user.UserEmail = newEmail;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
         }
+
+        public async Task<ServiceResponse<bool>> ChangeUserPassword(int userID, ChangeUserPasswordDTO dto)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserID == userID);
+            if (user == null)
+            {
+                return ServiceResponse<bool>.NotFound("User not found.");
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.UserPasswordHash))
+            {
+                return ServiceResponse<bool>.Fail("Current password is incorrect.");
+            }
+
+            user.UserPasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
+        }
+
+        public async Task<ServiceResponse<bool>> DeleteUser(int userID)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserID == userID);
+            if (user == null)
+            {
+                return ServiceResponse<bool>.NotFound("User not found.");
+            }
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
+        }
+
+        private static UserResponseDTO ToDto(User user) => new()
+        {
+            UserID = user.UserID,
+            UserName = user.UserName,
+            UserLastName = user.UserLastName,
+            UserPhone = user.UserPhone,
+            UserRoleName = user.DictionaryRole?.DictionaryCaption ?? "No Role Assigned",
+            UserEmail = user.UserEmail,
+            UserAge = user.UserAge,
+            CurrentWeight = user.CurrentWeight,
+            BirthDate = user.BirthDate,
+            Height = user.Height,
+            GoalWeight = user.GoalWeight,
+            CreatedAt = user.CreatedAt
+        };
     }
 }

@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebApplicationLB.Infrastructure.Services;
 using WebApplicationLB.Infrastructure.Services.Auth;
 
 namespace WebApplicationAPI.Controllers
 {
-    [ApiController]           
+    [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseApiController
     {
         private readonly AuthService _authService;
 
@@ -16,17 +16,15 @@ namespace WebApplicationAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserDTO Rdto)
+        public async Task<ActionResult<AuthResponseDTO>> Register(RegisterUserDTO dto)
         {
-            var result = await _authService.RegisterUser(Rdto);
-            return Ok(result);
+            return FromResult(await _authService.RegisterUser(dto));
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserDTO Ldto)
+        public async Task<ActionResult<AuthResponseDTO>> Login(LoginUserDTO dto)
         {
-            var result = await _authService.LoginUser(Ldto);
-            return Ok(result);
+            return FromResult(await _authService.LoginUser(dto));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
 using WebApplicationLB.Domain.Entities;
 using WebApplicationLB.Infrastructure.DataBase;
@@ -16,60 +16,50 @@ namespace WebApplicationLB.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<ServiceResponse<DictionaryResponseDTO>> CreateDictionary(CreateDictionaryDTO Cdto)
+        public async Task<ServiceResponse<DictionaryResponseDTO>> CreateDictionary(CreateDictionaryDTO dto)
         {
-            var result = new ServiceResponse<DictionaryResponseDTO>();
+            var caption = dto.DictionaryCaption.Trim();
 
             var exists = await _context.Dictionaries.AnyAsync(d =>
-                d.DictionaryGroupIntCode == Cdto.DictionaryGroupIntCode &&
-                d.DictionaryCaption == Cdto.DictionaryCaption);
-
+                d.DictionaryGroupIntCode == dto.DictionaryGroupIntCode &&
+                d.DictionaryCaption == caption);
             if (exists)
             {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(DictionaryService)}.{nameof(CreateDictionary)} - ERROR: '{Cdto.DictionaryCaption}' already exists in group {Cdto.DictionaryGroupIntCode}.";
-                return result;
+                return ServiceResponse<DictionaryResponseDTO>.Conflict($"'{caption}' already exists in group {dto.DictionaryGroupIntCode}.");
             }
 
-          
-            if (Cdto.DictionaryParentID.HasValue)
+            if (dto.DictionaryParentID.HasValue)
             {
-                var parentExists = await _context.Dictionaries
-                    .AnyAsync(d => d.DictionaryID == Cdto.DictionaryParentID.Value);
-
+                var parentExists = await _context.Dictionaries.AnyAsync(d => d.DictionaryID == dto.DictionaryParentID.Value);
                 if (!parentExists)
                 {
-                    result.IsSuccessful = false;
-                    result.ErrorMessage = $"{nameof(DictionaryService)}.{nameof(CreateDictionary)} - ERROR: Parent with ID {Cdto.DictionaryParentID} not found.";
-                    return result;
+                    return ServiceResponse<DictionaryResponseDTO>.Fail($"Parent with ID {dto.DictionaryParentID} not found.");
                 }
             }
 
             var newDictionary = new Dictionary
             {
-                DictionaryGroupIntCode = Cdto.DictionaryGroupIntCode,
-                DictionaryCaption = Cdto.DictionaryCaption,
-                DictionaryItemIntCode = Cdto.DictionaryItemIntCode,
-                DictionaryParentID = Cdto.DictionaryParentID
+                DictionaryGroupIntCode = dto.DictionaryGroupIntCode,
+                DictionaryCaption = caption,
+                DictionaryItemIntCode = dto.DictionaryItemIntCode,
+                DictionaryParentID = dto.DictionaryParentID
             };
 
             await _context.Dictionaries.AddAsync(newDictionary);
             await _context.SaveChangesAsync();
 
-            result.IsSuccessful = true;
-            result.Data = new DictionaryResponseDTO
+            return ServiceResponse<DictionaryResponseDTO>.Success(new DictionaryResponseDTO
             {
                 DictionaryID = newDictionary.DictionaryID,
                 DictionaryGroupIntCode = newDictionary.DictionaryGroupIntCode,
                 DictionaryCaption = newDictionary.DictionaryCaption,
                 DictionaryItemIntCode = newDictionary.DictionaryItemIntCode,
                 DictionaryParentID = newDictionary.DictionaryParentID
-            };
-
-            return result;
+            });
         }
 
-        public async Task<List<DictionaryResponseDTO>?> GetByGroup(int groupCode)
+        // Empty list (not an error) when the group has no items
+        public async Task<ServiceResponse<List<DictionaryResponseDTO>>> GetByGroup(int groupCode)
         {
             var items = await _context.Dictionaries
                 .Where(d => d.DictionaryGroupIntCode == groupCode)
@@ -77,17 +67,14 @@ namespace WebApplicationLB.Infrastructure.Services
                 .Select(d => new DictionaryResponseDTO
                 {
                     DictionaryID = d.DictionaryID,
+                    DictionaryGroupIntCode = d.DictionaryGroupIntCode,
                     DictionaryCaption = d.DictionaryCaption,
-                    DictionaryItemIntCode = d.DictionaryItemIntCode
+                    DictionaryItemIntCode = d.DictionaryItemIntCode,
+                    DictionaryParentID = d.DictionaryParentID
                 })
                 .ToListAsync();
 
-            if (items == null || items.Count == 0)
-            {
-                return null;
-            }
-
-            return items;
+            return ServiceResponse<List<DictionaryResponseDTO>>.Success(items);
         }
     }
 }

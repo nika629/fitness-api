@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
+using WebApplicationLB.Domain.Constants;
 using WebApplicationLB.Domain.Entities;
 using WebApplicationLB.Infrastructure.DataBase;
 using WebApplicationLB.Infrastructure.Services.Auth;
@@ -20,106 +21,71 @@ namespace WebApplicationLB.Infrastructure.Services
 
         public async Task<ServiceResponse<AuthResponseDTO>> RegisterUser(RegisterUserDTO registerDTO)
         {
-            var result = new ServiceResponse<AuthResponseDTO>();
+            var email = registerDTO.UserEmail.Trim().ToLowerInvariant();
 
-            var existedUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserEmail == registerDTO.UserEmail);
-
-            if (existedUser == null)
+            var emailTaken = await _dbContext.Users.AnyAsync(u => u.UserEmail.ToLower() == email);
+            if (emailTaken)
             {
-                var passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDTO.UserPassword);
-
-                if (passwordHash == null)
-                {
-                    result.IsSuccessful = false;
-                    result.ErrorMessage = $"{nameof(AuthService)}.{nameof(RegisterUser)} - ERROR : Failed to generate password hash.";
-                }
-                else
-                {
-                    var defaultRole = await _dbContext.Dictionaries
-                        .FirstOrDefaultAsync(d => d.DictionaryGroupIntCode == 1 && d.DictionaryCaption == "User");
-
-                    var newUser = new User
-                    {
-                        UserName = registerDTO.UserName,
-                        UserLastName = registerDTO.UserLastname,
-                        UserEmail = registerDTO.UserEmail,
-                        UserPhone = registerDTO.UserPhone,
-                        UserPasswordHash = passwordHash,
-                        UserDictionaryRoleID = defaultRole?.DictionaryID   
-                    };
-
-                    await _dbContext.Users.AddAsync(newUser);
-                    await _dbContext.SaveChangesAsync();
-
-                    if (newUser.UserID > 0)
-                    {
-                        var userDTO = new UserDTO
-                        {
-                            UserID = newUser.UserID,
-                            UserName = newUser.UserName,
-                            UserEmail = newUser.UserEmail,
-                            RoleName = defaultRole?.DictionaryCaption ?? "User"  
-                        };
-
-                        var token = _tokenService.GenerateToken(userDTO);
-
-                        var response = new AuthResponseDTO()
-                        {
-                            Token = token,
-                            UserName = newUser.UserName
-                        };
-
-                        result.IsSuccessful = true;
-                        result.Data = response;
-                    }
-                    else
-                    {
-                        result.IsSuccessful = false;
-                        result.ErrorMessage = $"{nameof(AuthService)}.{nameof(RegisterUser)} - ERROR : Failed to create user in database.";
-                    }
-                }
-            }
-            else
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(AuthService)}.{nameof(RegisterUser)} - ERROR : User with email {registerDTO.UserEmail} already exists.";
+                return ServiceResponse<AuthResponseDTO>.Conflict($"User with email {email} already exists.");
             }
 
-            return result;
-        }
+            var defaultRole = await _dbContext.Dictionaries
+                .FirstOrDefaultAsync(d => d.DictionaryGroupIntCode == DictionaryGroups.Roles
+                                       && d.DictionaryCaption == RoleNames.User);
 
-        public async Task<AuthResponseDTO> LoginUser(LoginUserDTO Rdto)
-        {
-            var user = await _dbContext.Users
-                .Include(u => u.DictionaryRole)   
-                .FirstOrDefaultAsync(u => u.UserEmail == Rdto.UserEmail);
-
-            if (user == null)
+            var newUser = new User
             {
-                throw new Exception("User with this email does not exist.");
-            }
-
-            var isPasswordValid = BCrypt.Net.BCrypt.Verify(Rdto.UserPassword, user.UserPasswordHash);
-
-            if (!isPasswordValid)
-            {
-                throw new Exception("Invalid password.");
-            }
-
-            var userDTO = new UserDTO
-            {
-                UserID = user.UserID,
-                UserName = user.UserName,
-                UserEmail = user.UserEmail,
-                RoleName = user.DictionaryRole?.DictionaryCaption ?? "User"  
+                UserName = registerDTO.UserName.Trim(),
+                UserLastName = registerDTO.UserLastname.Trim(),
+                UserEmail = email,
+                UserPhone = registerDTO.UserPhone.Trim(),
+                UserPasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDTO.UserPassword),
+                UserDictionaryRoleID = defaultRole?.DictionaryID,
+                CreatedAt = DateTime.UtcNow
             };
 
-            var token = _tokenService.GenerateToken(userDTO);
+            await _dbContext.Users.AddAsync(newUser);
+            await _dbContext.SaveChangesAsync();
+
+            return ServiceResponse<AuthResponseDTO>.Success(
+                BuildAuthResponse(newUser.UserID, newUser.UserName, newUser.UserEmail, defaultRole?.DictionaryCaption ?? RoleNames.User));
+        }
+
+        public async Task<ServiceResponse<AuthResponseDTO>> LoginUser(LoginUserDTO loginDTO)
+        {
+            var email = loginDTO.UserEmail.Trim().ToLowerInvariant();
+
+            var user = await _dbContext.Users
+                .Include(u => u.DictionaryRole)
+                .FirstOrDefaultAsync(u => u.UserEmail.ToLower() == email);
+
+            // Same message for wrong email and wrong password, so nobody can guess which emails exist
+            if (user == null || !BCrypt.Net.BCrypt.Verify(loginDTO.UserPassword, user.UserPasswordHash))
+            {
+                return ServiceResponse<AuthResponseDTO>.Fail("Invalid email or password.", 401);
+            }
+
+            return ServiceResponse<AuthResponseDTO>.Success(
+                BuildAuthResponse(user.UserID, user.UserName, user.UserEmail, user.DictionaryRole?.DictionaryCaption ?? RoleNames.User));
+        }
+
+        private AuthResponseDTO BuildAuthResponse(int userId, string userName, string email, string role)
+        {
+            var token = _tokenService.GenerateToken(new UserDTO
+            {
+                UserID = userId,
+                UserName = userName,
+                UserEmail = email,
+                RoleName = role
+            });
 
             return new AuthResponseDTO
             {
                 Token = token,
-                UserName = user.UserName
+                UserID = userId,
+                UserName = userName,
+                UserEmail = email,
+                Role = role
             };
         }
     }

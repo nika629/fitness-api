@@ -1,0 +1,19 @@
+[Unit]
+Description=Fitness API (ASP.NET Core)
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/fitnessapi
+ExecStart=/var/www/fitnessapi/WebApplicationAPI
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+SyslogIdentifier=fitnessapi
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://localhost:5000
+# Secrets (connection string, JWT key) live here, not in Git
+EnvironmentFile=/etc/fitnessapi.env
+
+[Install]
+WantedBy=multi-user.target

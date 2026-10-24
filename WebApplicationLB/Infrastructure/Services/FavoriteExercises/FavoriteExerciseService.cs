@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
 using WebApplicationLB.Domain.Entities;
 using WebApplicationLB.Infrastructure.DataBase;
@@ -6,7 +6,7 @@ using WebApplicationLB.Infrastructure.Services.FavoriteExercises;
 
 namespace WebApplicationLB.Infrastructure.Services
 {
-    public  class FavoriteExerciseService
+    public class FavoriteExerciseService
     {
         private readonly ApplicationDbContext _context;
 
@@ -15,110 +15,77 @@ namespace WebApplicationLB.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<ServiceResponse<List<FavoriteExerciseResponseDTO>>> GetAllFavoritesByUser(int userID)
-        {
-
-            var result = new ServiceResponse<List<FavoriteExerciseResponseDTO>>();
-
-            var favorites = await _context.FavoriteExercises
+        private IQueryable<FavoriteExerciseResponseDTO> QueryForUser(int userID) =>
+            _context.FavoriteExercises
                 .Where(f => f.UserID == userID)
-                .Include(f => f.Exercise)
                 .Select(f => new FavoriteExerciseResponseDTO
                 {
                     ExerciseID = f.ExerciseID,
-                    ExerciseName = f.Exercise.ExerciseName,
-                    
-                })
-                .ToListAsync();
-            
-            if(favorites == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(FavoriteExerciseService)}.{nameof(GetAllFavoritesByUser)} - ERROR: Couldn't get favorite exercises by user.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = favorites;
-            }
+                    ExerciseName = f.Exercise!.ExerciseName,
+                    ExerciseDescription = f.Exercise.ExerciseDescription,
+                    ExerciseDifficulty = f.Exercise.ExerciseDifficulty,
+                    MuscleGroupName = f.Exercise.DictionaryMuscleGroup != null ? f.Exercise.DictionaryMuscleGroup.DictionaryCaption : null,
+                    EquipmentName = f.Exercise.DictionaryEquipment != null ? f.Exercise.DictionaryEquipment.DictionaryCaption : null
+                });
 
-            return result;
+        public async Task<ServiceResponse<List<FavoriteExerciseResponseDTO>>> GetAllFavoritesByUser(int userID)
+        {
+            var favorites = await QueryForUser(userID)
+                .OrderBy(f => f.ExerciseName)
+                .ToListAsync();
+
+            return ServiceResponse<List<FavoriteExerciseResponseDTO>>.Success(favorites);
         }
 
         public async Task<ServiceResponse<FavoriteExerciseResponseDTO>> GetFavoriteExerciseByID(int exerciseID, int userID)
         {
-            var result = new ServiceResponse<FavoriteExerciseResponseDTO>();
+            var favorite = await QueryForUser(userID)
+                .FirstOrDefaultAsync(f => f.ExerciseID == exerciseID);
 
-            var favoriteExercise = await _context.FavoriteExercises
-                .Include(f => f.Exercise)
-                .FirstOrDefaultAsync(s => s.ExerciseID == exerciseID && s.UserID == userID);
-
-            if(favoriteExercise == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(FavoriteExerciseService)}.{nameof(GetFavoriteExerciseByID)} - ERROR: Couldn't get favorite exercise by ID.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = new FavoriteExerciseResponseDTO
-                {
-                    ExerciseID = favoriteExercise.ExerciseID,
-                    ExerciseName = favoriteExercise.Exercise.ExerciseName,
-
-                };
-            }
-
-            return result;
+            return favorite == null
+                ? ServiceResponse<FavoriteExerciseResponseDTO>.NotFound("Favorite exercise not found.")
+                : ServiceResponse<FavoriteExerciseResponseDTO>.Success(favorite);
         }
 
-        public async Task<ServiceResponse<FavoriteExerciseResponseDTO>> CreateFavoriteExercise(int userID, FavoriteExerciseCreateDTO Cdto)
+        public async Task<ServiceResponse<FavoriteExerciseResponseDTO>> CreateFavoriteExercise(int userID, FavoriteExerciseCreateDTO dto)
         {
+            var exerciseExists = await _context.Exercises.AnyAsync(e => e.ExerciseID == dto.ExerciseID);
+            if (!exerciseExists)
+            {
+                return ServiceResponse<FavoriteExerciseResponseDTO>.NotFound("Exercise not found.");
+            }
 
-            var result = new ServiceResponse<FavoriteExerciseResponseDTO>();
+            var alreadyFavorite = await _context.FavoriteExercises
+                .AnyAsync(f => f.UserID == userID && f.ExerciseID == dto.ExerciseID);
+            if (alreadyFavorite)
+            {
+                return ServiceResponse<FavoriteExerciseResponseDTO>.Conflict("Exercise is already in favorites.");
+            }
 
-            var newFavoriteExercise = new FavoriteExercise
+            _context.FavoriteExercises.Add(new FavoriteExercise
             {
                 UserID = userID,
-                ExerciseID = Cdto.ExerciseID
-            };
+                ExerciseID = dto.ExerciseID
+            });
+            await _context.SaveChangesAsync();
 
-            if(newFavoriteExercise == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(FavoriteExerciseService)}.{nameof(CreateFavoriteExercise)} - ERROR: Couldn't create favorite exercise.";
-            }
-            else
-            {
-                _context.FavoriteExercises.Add(newFavoriteExercise);
-                await _context.SaveChangesAsync();
-
-                result.IsSuccessful = true;
-                result.Data = new FavoriteExerciseResponseDTO
-                {
-                    ExerciseID = newFavoriteExercise.ExerciseID,
-                    ExerciseName = newFavoriteExercise.Exercise.ExerciseName,
-
-                };
-            }
-
-            return result;
+            return await GetFavoriteExerciseByID(dto.ExerciseID, userID);
         }
 
-        [Obsolete("Needs to be reviewed")]
-        public async Task DeleteFavoriteExercise(int exerciseID, int userID)
+        public async Task<ServiceResponse<bool>> DeleteFavoriteExercise(int exerciseID, int userID)
         {
-            var favExercise = await _context.FavoriteExercises.FirstOrDefaultAsync(i => i.ExerciseID == exerciseID && i.UserID == userID);
+            var favorite = await _context.FavoriteExercises
+                .FirstOrDefaultAsync(f => f.ExerciseID == exerciseID && f.UserID == userID);
 
-            if (favExercise == null)
+            if (favorite == null)
             {
-                // ErrorMessage
+                return ServiceResponse<bool>.NotFound("Favorite exercise not found.");
             }
-            else
-            {
-                _context.FavoriteExercises.Remove(favExercise);
-                await _context.SaveChangesAsync();
-            }
+
+            _context.FavoriteExercises.Remove(favorite);
+            await _context.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
         }
     }
 }

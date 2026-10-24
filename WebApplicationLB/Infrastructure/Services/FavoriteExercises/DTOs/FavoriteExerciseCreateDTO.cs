@@ -1,7 +1,10 @@
-﻿namespace WebApplicationLB.Infrastructure.Services.FavoriteExercises
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApplicationLB.Infrastructure.Services.FavoriteExercises
 {
     public class FavoriteExerciseCreateDTO
     {
-       public int ExerciseID { get; set; }
+        [Range(1, int.MaxValue)]
+        public int ExerciseID { get; set; }
     }
 }

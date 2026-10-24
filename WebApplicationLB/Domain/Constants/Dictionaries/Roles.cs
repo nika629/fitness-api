@@ -1,14 +1,13 @@
-﻿namespace WebApplicationLB.Domain.Constants.Dictionaries
+namespace WebApplicationLB.Domain.Constants.Dictionaries
 {
     public partial class Dictionary
     {
+        // DictionaryID values in the database
         public class Roles
         {
-            #region Properties   
+            #region Properties
             public const int Admin = 1;
-            public const int Moderator = 2;
-            public const int User = 3;
-            public const int Coach = 4;
+            public const int User = 2;
             #endregion
         }
     }

@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
+using WebApplicationLB.Domain.Constants;
 using WebApplicationLB.Domain.Entities;
 using WebApplicationLB.Infrastructure.DataBase;
 using WebApplicationLB.Infrastructure.Services.Exercises;
@@ -9,174 +11,152 @@ namespace WebApplicationLB.Infrastructure.Services
     public class ExerciseService
     {
         private readonly ApplicationDbContext _context;
-        
+
         public ExerciseService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-        public async Task<ServiceResponse<List<ExerciseResponseDTO>>> GetAllExercises()
+        // Single place that turns an Exercise row into the DTO (translated to SQL by EF)
+        private static readonly Expression<Func<Exercise, ExerciseResponseDTO>> ToDto = e => new ExerciseResponseDTO
         {
-            var result = new ServiceResponse<List<ExerciseResponseDTO>>();
+            ExerciseID = e.ExerciseID,
+            ExerciseName = e.ExerciseName,
+            ExerciseDescription = e.ExerciseDescription,
+            ExerciseDifficulty = e.ExerciseDifficulty,
+            MuscleGroupID = e.MuscleGroupDictionaryID,
+            MuscleGroupName = e.DictionaryMuscleGroup != null ? e.DictionaryMuscleGroup.DictionaryCaption : null,
+            EquipmentID = e.EquipmentDictionaryID,
+            EquipmentName = e.DictionaryEquipment != null ? e.DictionaryEquipment.DictionaryCaption : null,
+            CreateAt = e.CreateAt,
+            UpdatedAt = e.UpdatedAt
+        };
 
-            var exercises = await _context.Exercises
-                .Select(s => new ExerciseResponseDTO
-                {
-                    ExerciseID = s.ExerciseID,
-                    ExerciseName = s.ExerciseName,
-                    ExerciseDescription = s.ExerciseDescription,
-                    ExerciseDifficulty = s.ExerciseDifficulty,
-                    MuscleGroupID = s.MuscleGroupDictionaryID,
-                    EquipmentID = s.EquipmentDictionaryID,
-                    UpdatedAt = s.UpdatedAt,
-                    CreateAt = s.CreateAt
-                })
+        public async Task<ServiceResponse<List<ExerciseResponseDTO>>> GetAllExercises(int? muscleGroupId = null, int? equipmentId = null, string? search = null)
+        {
+            var query = _context.Exercises.AsQueryable();
+
+            if (muscleGroupId.HasValue)
+                query = query.Where(e => e.MuscleGroupDictionaryID == muscleGroupId.Value);
+
+            if (equipmentId.HasValue)
+                query = query.Where(e => e.EquipmentDictionaryID == equipmentId.Value);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim().ToLower();
+                query = query.Where(e => e.ExerciseName.ToLower().Contains(term));
+            }
+
+            var exercises = await query
+                .OrderBy(e => e.ExerciseName)
+                .Select(ToDto)
                 .ToListAsync();
 
-            if(exercises == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(ExerciseService)}.{nameof(GetAllExercises)} - ERROR: Couldn't get Exercises.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = exercises;
-            }
-
-            return result;
-
-            
+            return ServiceResponse<List<ExerciseResponseDTO>>.Success(exercises);
         }
 
-        public async Task<ServiceResponse<ExerciseResponseDTO?>> GetExerciseByID(int exerciseId)
+        public async Task<ServiceResponse<ExerciseResponseDTO>> GetExerciseByID(int exerciseId)
         {
-            var result = new ServiceResponse<ExerciseResponseDTO?>();
-
             var exercise = await _context.Exercises
-                .FirstOrDefaultAsync(s => s.ExerciseID == exerciseId);
+                .Where(e => e.ExerciseID == exerciseId)
+                .Select(ToDto)
+                .FirstOrDefaultAsync();
 
-            if (exercise == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(ExerciseService)}.{nameof(GetExerciseByID)} - ERROR: Couldn't get exercises by ID.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = new ExerciseResponseDTO
-                {
-                    ExerciseID = exercise.ExerciseID,
-                    ExerciseName = exercise.ExerciseName,
-                    ExerciseDescription = exercise.ExerciseDescription,
-                    ExerciseDifficulty = exercise.ExerciseDifficulty,
-                    MuscleGroupID = exercise.MuscleGroupDictionaryID,
-                    EquipmentID = exercise.EquipmentDictionaryID,
-                    CreateAt = exercise.CreateAt,
-                    UpdatedAt = exercise.UpdatedAt
-                };
-            }
-
-
-            return result;
+            return exercise == null
+                ? ServiceResponse<ExerciseResponseDTO>.NotFound("Exercise not found.")
+                : ServiceResponse<ExerciseResponseDTO>.Success(exercise);
         }
 
-        public async Task<ServiceResponse<ExerciseResponseDTO>> CreateExercise(ExerciseCreateDTO Cdto)
+        public async Task<ServiceResponse<ExerciseResponseDTO>> CreateExercise(ExerciseCreateDTO dto)
         {
-
-            var result = new ServiceResponse<ExerciseResponseDTO>();
+            var validationError = await ValidateDictionaryIds(dto.MuscleGroupID, dto.EquipmentID);
+            if (validationError != null)
+            {
+                return ServiceResponse<ExerciseResponseDTO>.Fail(validationError);
+            }
 
             var newExercise = new Exercise
             {
-                ExerciseName = Cdto.ExerciseName,
-                ExerciseDescription = Cdto.ExerciseDescription,
-                ExerciseDifficulty = Cdto.ExerciseDifficulty,
-                MuscleGroupDictionaryID = Cdto.MuscleGroupID,
-                EquipmentDictionaryID = Cdto.EquipmentID,
+                ExerciseName = dto.ExerciseName.Trim(),
+                ExerciseDescription = dto.ExerciseDescription.Trim(),
+                ExerciseDifficulty = dto.ExerciseDifficulty.Trim(),
+                MuscleGroupDictionaryID = dto.MuscleGroupID,
+                EquipmentDictionaryID = dto.EquipmentID,
                 CreateAt = DateTime.UtcNow
             };
 
-            if(newExercise == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(ExerciseService)}.{nameof(CreateExercise)} - ERROR: Couldn't create Exercise.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                _context.Exercises.Add(newExercise);
-                await _context.SaveChangesAsync();
+            _context.Exercises.Add(newExercise);
+            await _context.SaveChangesAsync();
 
-                result.Data = new ExerciseResponseDTO
-                {
-                    ExerciseID = newExercise.ExerciseID,
-                    ExerciseName = newExercise.ExerciseName,
-                    ExerciseDescription = newExercise.ExerciseDescription,
-                    ExerciseDifficulty = newExercise.ExerciseDifficulty,
-                    MuscleGroupID = newExercise.MuscleGroupDictionaryID,
-                    EquipmentID = newExercise.EquipmentDictionaryID,
-                    CreateAt = newExercise.CreateAt,
-                    UpdatedAt = newExercise.UpdatedAt
-                };
-            }
-
-            return result;
+            return await GetExerciseByID(newExercise.ExerciseID);
         }
 
-        public async Task<ServiceResponse<ExerciseResponseDTO?>> UpdateExercise(int exerciseID, ExerciseUpdateDTO dto)
+        public async Task<ServiceResponse<ExerciseResponseDTO>> UpdateExercise(int exerciseID, ExerciseUpdateDTO dto)
         {
-
-            var result = new ServiceResponse<ExerciseResponseDTO?>();
-
-            var exercise = await _context.Exercises
-                .FirstOrDefaultAsync(e => e.ExerciseID == exerciseID);
-
+            var exercise = await _context.Exercises.FirstOrDefaultAsync(e => e.ExerciseID == exerciseID);
             if (exercise == null)
             {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(ExerciseService)}.{nameof(UpdateExercise)} - ERROR: Couldn't update exercise.";
+                return ServiceResponse<ExerciseResponseDTO>.NotFound("Exercise not found.");
             }
-            else
+
+            var validationError = await ValidateDictionaryIds(dto.MuscleGroupID, dto.EquipmentID);
+            if (validationError != null)
             {
-                
-
-                exercise.ExerciseName = dto.ExerciseName ?? exercise.ExerciseName;
-                exercise.ExerciseDescription = dto.ExerciseDescription ?? exercise.ExerciseDescription;
-                exercise.ExerciseDifficulty = dto.ExerciseDifficulty ?? exercise.ExerciseDifficulty;
-                exercise.MuscleGroupDictionaryID = dto.MuscleGroupID ?? exercise.MuscleGroupDictionaryID;
-                exercise.EquipmentDictionaryID = dto.EquipmentID ?? exercise.EquipmentDictionaryID;
-                exercise.UpdatedAt = DateTime.UtcNow;
-
-                await _context.SaveChangesAsync();
-
-                result.IsSuccessful = true;
-                result.Data = new ExerciseResponseDTO
-                {
-                    ExerciseID = exercise.ExerciseID,
-                    ExerciseName = exercise.ExerciseName,
-                    ExerciseDescription = exercise.ExerciseDescription,
-                    ExerciseDifficulty = exercise.ExerciseDifficulty,
-                    MuscleGroupID = exercise.MuscleGroupDictionaryID,
-                    EquipmentID = exercise.EquipmentDictionaryID,
-                    CreateAt = exercise.CreateAt,
-                    UpdatedAt = exercise.UpdatedAt
-                };
+                return ServiceResponse<ExerciseResponseDTO>.Fail(validationError);
             }
-            return result;
+
+            // Only overwrite the fields that were actually sent
+            if (!string.IsNullOrWhiteSpace(dto.ExerciseName)) exercise.ExerciseName = dto.ExerciseName.Trim();
+            if (dto.ExerciseDescription != null) exercise.ExerciseDescription = dto.ExerciseDescription.Trim();
+            if (!string.IsNullOrWhiteSpace(dto.ExerciseDifficulty)) exercise.ExerciseDifficulty = dto.ExerciseDifficulty.Trim();
+            if (dto.MuscleGroupID.HasValue) exercise.MuscleGroupDictionaryID = dto.MuscleGroupID.Value;
+            if (dto.EquipmentID.HasValue) exercise.EquipmentDictionaryID = dto.EquipmentID.Value;
+            exercise.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            return await GetExerciseByID(exercise.ExerciseID);
         }
 
-
-        public async Task DeleteExercise(int exerciseID)
+        public async Task<ServiceResponse<bool>> DeleteExercise(int exerciseID)
         {
-            var exercise = await _context.Exercises.FirstOrDefaultAsync(s => s.ExerciseID == exerciseID);
-
-            if(exercise != null)
+            var exercise = await _context.Exercises.FirstOrDefaultAsync(e => e.ExerciseID == exerciseID);
+            if (exercise == null)
             {
-                _context.Exercises.Remove(exercise);
-                await _context.SaveChangesAsync();
+                return ServiceResponse<bool>.NotFound("Exercise not found.");
             }
 
+            var usedInPlans = await _context.WorkoutExercises.AnyAsync(w => w.ExerciseID == exerciseID);
+            if (usedInPlans)
+            {
+                return ServiceResponse<bool>.Conflict("This exercise is used in a workout plan and cannot be deleted.");
+            }
+
+            _context.Exercises.Remove(exercise);
+            await _context.SaveChangesAsync();
+
+            return ServiceResponse<bool>.Success(true);
+        }
+
+        // Returns an error message, or null when the IDs are valid
+        private async Task<string?> ValidateDictionaryIds(int? muscleGroupId, int? equipmentId)
+        {
+            if (muscleGroupId.HasValue)
+            {
+                var ok = await _context.Dictionaries.AnyAsync(d =>
+                    d.DictionaryID == muscleGroupId.Value && d.DictionaryGroupIntCode == DictionaryGroups.MuscleGroups);
+                if (!ok) return $"Muscle group with ID {muscleGroupId} does not exist.";
+            }
+
+            if (equipmentId.HasValue)
+            {
+                var ok = await _context.Dictionaries.AnyAsync(d =>
+                    d.DictionaryID == equipmentId.Value && d.DictionaryGroupIntCode == DictionaryGroups.Equipment);
+                if (!ok) return $"Equipment with ID {equipmentId} does not exist.";
+            }
+
+            return null;
         }
     }
 }

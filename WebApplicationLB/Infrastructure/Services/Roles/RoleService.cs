@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Common;
+using WebApplicationLB.Domain.Constants;
 using WebApplicationLB.Infrastructure.DataBase;
 using WebApplicationLB.Infrastructure.Services.Roles;
 
@@ -16,26 +17,17 @@ namespace WebApplicationLB.Infrastructure.Services
 
         public async Task<ServiceResponse<List<RoleResoponseDTO>>> GetRoles()
         {
-            var result = new ServiceResponse<List<RoleResoponseDTO>>();
+            var roles = await _context.Dictionaries
+                .Where(d => d.DictionaryGroupIntCode == DictionaryGroups.Roles)
+                .OrderBy(d => d.DictionaryID)
+                .Select(d => new RoleResoponseDTO
+                {
+                    RoleID = d.DictionaryID,
+                    RoleName = d.DictionaryCaption
+                })
+                .ToListAsync();
 
-            var roles = await _context.Dictionaries.Select(item => new RoleResoponseDTO
-            {
-                RoleID = item.DictionaryID,
-                RoleName = item.DictionaryCaption,
-            }).ToListAsync();
-
-            if (roles == null)
-            {
-                result.IsSuccessful = false;
-                result.ErrorMessage = $"{nameof(RoleService)}.{nameof(GetRoles)} - ERROR: Couldn't get roles.";
-            }
-            else
-            {
-                result.IsSuccessful = true;
-                result.Data = roles;
-            }
-
-            return result;
+            return ServiceResponse<List<RoleResoponseDTO>>.Success(roles);
         }
     }
 }

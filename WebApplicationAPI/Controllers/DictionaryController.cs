@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApplicationLB.Domain.Constants;
 using WebApplicationLB.Infrastructure.Services;
 using WebApplicationLB.Infrastructure.Services.Dictionaries;
 using WebApplicationLB.Infrastructure.Services.Dictionaries.DTOs;
@@ -9,7 +10,7 @@ namespace WebApplicationAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class DictionaryController : ControllerBase
+    public class DictionaryController : BaseApiController
     {
         private readonly DictionaryService _dictionaryService;
 
@@ -18,36 +19,18 @@ namespace WebApplicationAPI.Controllers
             _dictionaryService = dictionaryService;
         }
 
+        // 1 = Roles, 2 = Equipment, 3 = Muscle groups. Any logged-in user can read (needed for dropdowns).
         [HttpGet("group/{groupCode}")]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<DictionaryResponseDTO>>> GetByGroup(int groupCode)
         {
-            var items = await _dictionaryService.GetByGroup(groupCode);
-
-            if (items == null)
-            {
-                return NotFound($"No dictionary items found for group code {groupCode}.");
-            }
-
-            return Ok(items);
+            return FromResult(await _dictionaryService.GetByGroup(groupCode));
         }
 
-        [HttpPost("group/{groupCode}")]
-        public async Task<ActionResult<List<DictionaryResponseDTO>>> CreateDictionary(CreateDictionaryDTO Cdto)
+        [HttpPost]
+        [Authorize(Roles = RoleNames.Admin)]
+        public async Task<ActionResult<DictionaryResponseDTO>> CreateDictionary(CreateDictionaryDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var result = await _dictionaryService.CreateDictionary(Cdto);
-
-            if (!result.IsSuccessful)
-            {
-                return BadRequest(result.ErrorMessage);
-            }
-
-            return Ok(result.Data);
+            return FromResult(await _dictionaryService.CreateDictionary(dto));
         }
     }
 }

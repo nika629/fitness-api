@@ -1,7 +1,26 @@
+# Build output
 bin/
 obj/
 publish/
+[Pp]ublish/
+out/
+TestResults/
+
+# Visual Studio / Rider / VS Code
 .vs/
+.idea/
+.vscode/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# Secrets and local settings - never commit these
 *.env
+appsettings.Local.json
+appsettings.Production.json
+secrets.json
+
+# OS files
+.DS_Store
+Thumbs.db

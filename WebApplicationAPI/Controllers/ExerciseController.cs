@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApplicationLB.Domain.Constants;
 using WebApplicationLB.Infrastructure.Services;
 using WebApplicationLB.Infrastructure.Services.Exercises;
 
@@ -8,7 +9,7 @@ namespace WebApplicationAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ExerciseController : ControllerBase
+    public class ExerciseController : BaseApiController
     {
         private readonly ExerciseService _exerciseService;
 
@@ -17,77 +18,39 @@ namespace WebApplicationAPI.Controllers
             _exerciseService = exerciseService;
         }
 
+        // Optional filters: ?muscleGroupId=12&equipmentId=3&search=press
         [HttpGet("exercises")]
-        public async Task<ActionResult<List<ExerciseResponseDTO>>> GetAllExercise()
+        public async Task<ActionResult<List<ExerciseResponseDTO>>> GetAllExercises(
+            [FromQuery] int? muscleGroupId, [FromQuery] int? equipmentId, [FromQuery] string? search)
         {
-            var exercises = await _exerciseService.GetAllExercises();
-
-            if (exercises == null)
-            {
-                return NotFound("Exercises not found");
-            }
-
-            return Ok(exercises);
+            return FromResult(await _exerciseService.GetAllExercises(muscleGroupId, equipmentId, search));
         }
 
         [HttpGet("{exerciseID}")]
         public async Task<ActionResult<ExerciseResponseDTO>> GetExerciseByID(int exerciseID)
         {
-            var exercise = await _exerciseService.GetExerciseByID(exerciseID);
-
-            if (exercise == null)
-            {
-                return NotFound("Exercise not found");
-            }
-
-            return Ok(exercise);
+            return FromResult(await _exerciseService.GetExerciseByID(exerciseID));
         }
 
         [HttpPost("exercise")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ExerciseResponseDTO>> CreateExercise(ExerciseCreateDTO Cdto)
+        [Authorize(Roles = RoleNames.Admin)]
+        public async Task<ActionResult<ExerciseResponseDTO>> CreateExercise(ExerciseCreateDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var exercise = await _exerciseService.CreateExercise(Cdto);
-
-            if (exercise == null)
-            {
-                return BadRequest("Couldn't create exercise");
-            }
-
-            return Ok(exercise);
+            return FromResult(await _exerciseService.CreateExercise(dto));
         }
 
         [HttpPut("{exerciseID}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ExerciseResponseDTO>> UpdateExercise(int exerciseID, ExerciseUpdateDTO Udto)
+        [Authorize(Roles = RoleNames.Admin)]
+        public async Task<ActionResult<ExerciseResponseDTO>> UpdateExercise(int exerciseID, ExerciseUpdateDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var exercise = await _exerciseService.UpdateExercise(exerciseID, Udto);
-
-            if (exercise == null)
-            {
-                return NotFound("Exercise not found");
-            }
-
-            return Ok(exercise);
+            return FromResult(await _exerciseService.UpdateExercise(exerciseID, dto));
         }
 
         [HttpDelete("{exerciseID}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<string>> DeleteExercise(int exerciseID)
+        [Authorize(Roles = RoleNames.Admin)]
+        public async Task<ActionResult> DeleteExercise(int exerciseID)
         {
-            await _exerciseService.DeleteExercise(exerciseID);
-
-            return Ok("Exercise deleted successfully");
+            return FromResultNoContent(await _exerciseService.DeleteExercise(exerciseID));
         }
     }
 }

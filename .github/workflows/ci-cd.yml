@@ -3,57 +3,82 @@ name: CI/CD
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
-      - uses: actions/setup-dotnet@v4
+jobs:
+  # ---------- CI: build + test on every push and pull request ----------
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
-      - name: Build
-        run: dotnet build WebApplicationAPI.slnx -c Release
+      - name: Restore packages
+        run: dotnet restore WebApplicationAPI.slnx
 
-      - name: Publish
+      - name: Build
+        run: dotnet build WebApplicationAPI.slnx -c Release --no-restore
+
+      - name: Run tests
+        run: dotnet test WebApplicationAPI.slnx -c Release --no-build --verbosity normal
+
+      - name: Publish (Linux, self-contained)
         run: dotnet publish WebApplicationAPI/WebApplicationAPI.csproj -c Release -r linux-x64 --self-contained true -o publish
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
           name: api
           path: publish
+          retention-days: 7
 
+  # ---------- CD: deploy to the DigitalOcean Droplet (only from main) ----------
   deploy:
     name: Deploy to Droplet
-    needs: build
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    environment: production
+
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
         with:
           name: api
           path: publish
 
-      - name: Set up SSH
+      - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Copy files to server
+      - name: Copy files to the server
         run: |
-          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" publish/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/fitnessapi/"
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" \
+            publish/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/fitnessapi/"
 
-      - name: Restart API
+      - name: Restart the API and check health
         run: |
           ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" '
             set -e
             chmod +x /var/www/fitnessapi/WebApplicationAPI
             systemctl restart fitnessapi
-            curl -fsS --retry 10 --retry-delay 3 --retry-connrefused -o /dev/null http://localhost:5000/swagger/index.html
+            curl -fsS --retry 10 --retry-delay 3 --retry-connrefused http://localhost:5000/health
+            echo ""
             echo "Deploy OK"
           '
