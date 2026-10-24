@@ -12,7 +12,6 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
-  # ---------- CI: build + test on every push and pull request ----------
   build-and-test:
     name: Build & Test
     runs-on: ubuntu-latest
@@ -35,8 +34,8 @@ jobs:
       - name: Run tests
         run: dotnet test WebApplicationAPI.slnx -c Release --no-build --verbosity normal
 
-      - name: Publish (Linux, self-contained)
-        run: dotnet publish WebApplicationAPI/WebApplicationAPI.csproj -c Release -r linux-x64 --self-contained true -o publish
+      - name: Publish
+        run: dotnet publish WebApplicationAPI/WebApplicationAPI.csproj -c Release -o publish
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -45,13 +44,11 @@ jobs:
           path: publish
           retention-days: 7
 
-  # ---------- CD: deploy to the DigitalOcean Droplet (only from main) ----------
   deploy:
     name: Deploy to Droplet
     needs: build-and-test
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
       - name: Download build artifact
@@ -70,15 +67,15 @@ jobs:
       - name: Copy files to the server
         run: |
           rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" \
-            publish/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/fitnessapi/"
+            publish/ "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/myapp/"
 
       - name: Restart the API and check health
         run: |
           ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" '
             set -e
-            chmod +x /var/www/fitnessapi/WebApplicationAPI
-            systemctl restart fitnessapi
-            curl -fsS --retry 10 --retry-delay 3 --retry-connrefused http://localhost:5000/health
+            chown -R deploy:deploy /var/www/myapp
+            systemctl restart myapp
+            curl -fsS --retry 10 --retry-delay 3 --retry-connrefused http://127.0.0.1:5000/health
             echo ""
             echo "Deploy OK"
           '
