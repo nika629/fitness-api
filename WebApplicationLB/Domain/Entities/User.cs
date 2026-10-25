@@ -1,4 +1,4 @@
-﻿namespace WebApplicationLB.Domain.Entities
+namespace WebApplicationLB.Domain.Entities
 {
     internal record User
     {
@@ -22,5 +22,7 @@
         public List<WorkoutPlan> WorkoutPlans { get; set; } = [];
         public List<FavoriteExercise> FavoriteExercises { get; set; } = [];
         public List<FoodLog> FoodLogs { get; set; } = [];
+        public List<WorkoutSession> WorkoutSessions { get; set; } = [];
+        public List<WeightLog> WeightLogs { get; set; } = [];
     }
 }

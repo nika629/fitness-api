@@ -5,8 +5,9 @@ import { toDateKey } from '../../core/api';
 import { AuthStore } from '../../core/auth.store';
 import { FavoritesStore } from '../../core/favorites.store';
 import { FoodService, sumMacros } from '../../core/food.service';
-import { FoodLog, UserProfile, WorkoutPlan } from '../../core/models';
+import { FoodLog, UserProfile, WorkoutPlan, WorkoutSession } from '../../core/models';
 import { PlanService } from '../../core/plan.service';
+import { SessionService } from '../../core/session.service';
 import { UserService } from '../../core/user.service';
 import { Barbell } from '../../shared/barbell';
 import { Icon } from '../../shared/icon';
@@ -24,12 +25,17 @@ export class DashboardPage {
   private readonly food = inject(FoodService);
   private readonly plansApi = inject(PlanService);
   private readonly users = inject(UserService);
+  private readonly sessionsApi = inject(SessionService);
 
   protected readonly today = new Date();
   protected readonly loading = signal(true);
   protected readonly profile = signal<UserProfile | null>(null);
   protected readonly plans = signal<WorkoutPlan[]>([]);
   private readonly logs = signal<FoodLog[]>([]);
+  private readonly sessions = signal<WorkoutSession[]>([]);
+
+  /** The last three finished workouts */
+  protected readonly recent = computed(() => this.sessions().slice(0, 3));
 
   protected readonly todayLogs = computed(() => {
     const key = toDateKey(this.today);
@@ -75,12 +81,13 @@ export class DashboardPage {
     const userId = this.auth.userId();
     this.favorites.load();
 
-    let pending = 3;
+    let pending = 4;
     const done = () => --pending === 0 && this.loading.set(false);
 
     this.users.me().subscribe({ next: (p) => this.profile.set(p), complete: done, error: done });
     this.plansApi.list(userId).subscribe({ next: (p) => this.plans.set(p), complete: done, error: done });
     this.food.list(userId).subscribe({ next: (l) => this.logs.set(l), complete: done, error: done });
+    this.sessionsApi.list(userId).subscribe({ next: (s) => this.sessions.set(s), complete: done, error: done });
   }
 
   protected abs(n: number): number {

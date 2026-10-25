@@ -19,6 +19,9 @@
         }
       </div>
       <div class="form-actions">
+        @if (items().length > 0) {
+          <a class="btn btn-primary" [routerLink]="['/workout', p.workoutPlanID]"><app-icon name="play" [size]="18" /> Start workout</a>
+        }
         <button class="btn" type="button" (click)="openEditPlan()"><app-icon name="edit" [size]="18" /> Edit</button>
         <button class="btn btn-danger" type="button" (click)="deletePlan()"><app-icon name="trash" [size]="18" /> Delete</button>
       </div>

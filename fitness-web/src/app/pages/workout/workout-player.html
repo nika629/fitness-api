@@ -1,0 +1,203 @@
+<div class="page player">
+  @switch (phase()) {
+    @case ('loading') {
+      <div class="skeleton" style="min-height: 64px"></div>
+      <div class="skeleton" style="min-height: 360px"></div>
+    }
+
+    @case ('missing') {
+      <div class="empty">
+        <h3>Plan not found</h3>
+        <p>It may have been deleted.</p>
+        <a class="btn btn-sm" routerLink="/plans">Back to plans</a>
+      </div>
+    }
+
+    @case ('empty') {
+      <a class="back" [routerLink]="['/plans', planId()]"><app-icon name="left" [size]="18" /> {{ plan()?.workoutPlanName }}</a>
+      <div class="empty">
+        <h3>This plan has no exercises</h3>
+        <p>Add a few exercises to the plan, then start the workout.</p>
+        <a class="btn btn-sm btn-primary" [routerLink]="['/plans', planId()]">Open the plan</a>
+      </div>
+    }
+
+    @case ('active') {
+      <header class="bar">
+        <a class="back" [routerLink]="['/plans', planId()]"><app-icon name="left" [size]="18" /> {{ plan()?.workoutPlanName }}</a>
+        <div class="bar-right">
+          <span class="clock" aria-label="Workout time">
+            <app-icon name="clock" [size]="16" />
+            <span class="num">{{ elapsed() }}</span>
+          </span>
+          <button class="btn btn-sm" type="button" (click)="finishEarly()">
+            <app-icon name="flag" [size]="16" /> Finish
+          </button>
+        </div>
+      </header>
+
+      <div class="progress" role="progressbar" [attr.aria-valuenow]="doneSets()" aria-valuemin="0" [attr.aria-valuemax]="totalSets()" aria-label="Sets done">
+        <span [style.width.%]="progress()"></span>
+      </div>
+      <p class="progress-label muted"><b class="num">{{ doneSets() }}</b> of {{ totalSets() }} sets done</p>
+
+      <div class="layout">
+        <section class="panel now" aria-live="polite">
+          @if (rest()) {
+            <div class="rest">
+              <p class="eyebrow">Rest</p>
+              <div class="ring">
+                <svg viewBox="0 0 200 200" aria-hidden="true">
+                  <circle class="track" cx="100" cy="100" [attr.r]="ring.r" />
+                  <circle
+                    class="left"
+                    cx="100"
+                    cy="100"
+                    [attr.r]="ring.r"
+                    [attr.stroke-dasharray]="ring.c"
+                    [attr.stroke-dashoffset]="ring.c * (1 - restRatio())"
+                  />
+                </svg>
+                <span class="num time">{{ restLabel() }}</span>
+              </div>
+              <p class="next">Next: <strong>{{ nextLabel() }}</strong></p>
+              <div class="rest-actions">
+                <button class="btn" type="button" (click)="addRest(15)">+15 s</button>
+                <button class="btn btn-primary" type="button" (click)="skipRest()">
+                  <app-icon name="skip" [size]="16" /> Skip rest
+                </button>
+              </div>
+            </div>
+          } @else if (block(); as b) {
+            <p class="eyebrow">Exercise {{ current().block + 1 }} of {{ blocks().length }}</p>
+            <h1>{{ b.name }}</h1>
+            <p class="target muted">
+              Set <b>{{ current().set + 1 }}</b> of {{ b.sets.length }} · target <b>{{ b.targetReps }}</b> reps
+            </p>
+
+            <ol class="dots big" aria-label="Sets of this exercise">
+              @for (s of b.sets; track $index) {
+                <li [class.done]="s.done" [class.here]="$index === current().set">
+                  @if (s.done) {
+                    <span class="num">{{ s.reps }}</span>
+                  } @else {
+                    <span class="num">{{ $index + 1 }}</span>
+                  }
+                </li>
+              }
+            </ol>
+
+            <div class="inputs" [class.single]="b.bodyweight">
+              <div class="stepper">
+                <label for="reps">Reps</label>
+                <div class="stepper-row">
+                  <button class="icon-btn" type="button" (click)="stepReps(-1)" aria-label="One rep less"><app-icon name="minus" /></button>
+                  <input id="reps" class="num" type="number" inputmode="numeric" min="0" max="1000" [value]="reps()" (input)="setReps($any($event.target).value)" />
+                  <button class="icon-btn" type="button" (click)="stepReps(1)" aria-label="One rep more"><app-icon name="plus" /></button>
+                </div>
+              </div>
+              @if (!b.bodyweight) {
+                <div class="stepper">
+                  <label for="kg">Weight, kg</label>
+                  <div class="stepper-row">
+                    <button class="icon-btn" type="button" (click)="stepWeight(-2.5)" aria-label="2.5 kg less"><app-icon name="minus" /></button>
+                    <input id="kg" class="num" type="number" inputmode="decimal" min="0" max="1000" step="0.5" placeholder="0" [value]="weight() ?? ''" (input)="setWeight($any($event.target).value)" />
+                    <button class="icon-btn" type="button" (click)="stepWeight(2.5)" aria-label="2.5 kg more"><app-icon name="plus" /></button>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <button class="btn btn-primary btn-block done-btn" type="button" (click)="completeSet()">
+              <app-icon name="check" [size]="20" /> Done – set {{ current().set + 1 }}
+            </button>
+          }
+        </section>
+
+        <section class="panel list" aria-labelledby="list-title">
+          <h2 id="list-title">Today's exercises</h2>
+          <ol class="blocks">
+            @for (b of blocks(); track b.exerciseID + '-' + $index; let bi = $index) {
+              <li>
+                <button type="button" class="block" [class.active]="bi === current().block" [class.complete]="doneIn(b) === b.sets.length" (click)="jumpTo(bi)">
+                  <span class="block-top">
+                    <strong>{{ b.name }}</strong>
+                    <span class="muted num">{{ doneIn(b) }}/{{ b.sets.length }}</span>
+                  </span>
+                  <span class="dots" aria-hidden="true">
+                    @for (s of b.sets; track $index) {
+                      <i [class.done]="s.done" [class.here]="isCurrent(bi, $index)"></i>
+                    }
+                  </span>
+                </button>
+              </li>
+            }
+          </ol>
+        </section>
+      </div>
+    }
+
+    @case ('summary') {
+      <header class="page-head">
+        <div>
+          <h1>{{ doneSets() === totalSets() ? 'Workout complete' : 'Finish workout' }}</h1>
+          <p>{{ plan()?.workoutPlanName }}</p>
+        </div>
+      </header>
+
+      <dl class="summary cols-4">
+        <div>
+          <dt>Time</dt>
+          <dd><span class="num">{{ minutes() }}</span> min</dd>
+        </div>
+        <div>
+          <dt>Sets</dt>
+          <dd><span class="num">{{ doneSets() }}</span> / {{ totalSets() }}</dd>
+        </div>
+        <div>
+          <dt>Exercises</dt>
+          <dd class="num">{{ blocks().length }}</dd>
+        </div>
+        <div>
+          <dt>Volume</dt>
+          <dd><span class="num">{{ volume() | number: '1.0-0' }}</span> kg</dd>
+        </div>
+      </dl>
+
+      <section class="panel">
+        <h2>What you did</h2>
+        <ul class="done-list">
+          @for (b of blocks(); track b.exerciseID + '-' + $index) {
+            @if (doneIn(b) > 0) {
+              <li>
+                <strong>{{ b.name }}</strong>
+                <span class="muted">
+                  @for (s of b.sets; track $index) {
+                    @if (s.done) {
+                      <span class="set-chip num">{{ s.reps }}@if (s.weightKg) { × {{ s.weightKg }} kg }</span>
+                    }
+                  }
+                </span>
+              </li>
+            }
+          }
+        </ul>
+
+        <div class="field">
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" class="textarea" maxlength="500" placeholder="How did it feel?" [value]="notes()" (input)="notes.set($any($event.target).value)"></textarea>
+        </div>
+
+        <div class="form-actions summary-actions">
+          <button class="btn btn-ghost" type="button" (click)="discard()">Discard</button>
+          @if (doneSets() < totalSets()) {
+            <button class="btn" type="button" (click)="backToWorkout()">Back to workout</button>
+          }
+          <button class="btn btn-primary" type="button" [disabled]="saving() || doneSets() === 0" (click)="save()">
+            <app-icon name="check" [size]="18" /> {{ saving() ? 'Saving…' : 'Save workout' }}
+          </button>
+        </div>
+      </section>
+    }
+  }
+</div>

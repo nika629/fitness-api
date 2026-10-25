@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebApplicationLB.Domain.Entities;
 
 namespace WebApplicationLB.Infrastructure.DataBase
@@ -12,6 +12,9 @@ namespace WebApplicationLB.Infrastructure.DataBase
         internal DbSet<FavoriteExercise> FavoriteExercises { get; set; }
         internal DbSet<FoodLog> FoodLogs { get; set; }
         internal DbSet<Dictionary> Dictionaries { get; set; }
+        internal DbSet<WorkoutSession> WorkoutSessions { get; set; }
+        internal DbSet<WorkoutSessionSet> WorkoutSessionSets { get; set; }
+        internal DbSet<WeightLog> WeightLogs { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions options) : base(options)

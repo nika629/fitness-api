@@ -1,0 +1,401 @@
+.player {
+  max-width: 1180px;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bar .back {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 1.15rem;
+}
+
+.clock .num {
+  color: var(--text);
+  min-width: 3.2ch;
+}
+
+/* ---------- progress ---------- */
+
+.progress {
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+  margin-bottom: -8px;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--blue);
+  transition: width 0.3s ease;
+}
+
+.progress-label {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ---------- layout ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  gap: clamp(14px, 1.6vw, 24px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.now {
+  padding: clamp(20px, 3vw, 36px);
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.now h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem);
+  line-height: 1.05;
+}
+
+.target {
+  margin: 8px 0 0;
+  font-size: 1.05rem;
+}
+
+.target b {
+  color: var(--text);
+}
+
+/* ---------- set dots ---------- */
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+}
+
+.dots i.done {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.dots i.here {
+  border-color: var(--blue);
+}
+
+.dots.big {
+  margin: 22px 0 26px;
+  gap: 10px;
+}
+
+.dots.big li {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--line-strong);
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+.dots.big li.done {
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--text);
+}
+
+.dots.big li.here {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+  color: var(--text);
+}
+
+/* ---------- steppers ---------- */
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.inputs.single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 340px;
+}
+
+.stepper label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.stepper-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 6px;
+}
+
+.stepper-row .icon-btn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.stepper-row input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: center;
+  font-size: 2.2rem;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+
+.stepper-row input::-webkit-outer-spin-button,
+.stepper-row input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.stepper-row input:focus {
+  outline: none;
+}
+
+.stepper-row:focus-within {
+  border-color: var(--blue);
+}
+
+.done-btn {
+  margin-top: auto;
+  min-height: 56px;
+  font-size: 1.1rem;
+}
+
+.inputs + .done-btn {
+  margin-top: 24px;
+}
+
+/* ---------- rest ---------- */
+
+.rest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto 0;
+}
+
+.ring {
+  position: relative;
+  width: min(240px, 70vw);
+  aspect-ratio: 1;
+  margin: 8px 0 16px;
+}
+
+.ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring circle {
+  fill: none;
+  stroke-width: 10;
+}
+
+.ring .track {
+  stroke: var(--surface-2);
+}
+
+.ring .left {
+  stroke: var(--blue);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.ring .time {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(3rem, 2rem + 3vw, 4.4rem);
+}
+
+.next {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.next strong {
+  color: var(--text);
+}
+
+.rest-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- exercise list ---------- */
+
+.list h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+}
+
+.blocks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.block {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.block:hover {
+  background: var(--surface-2);
+}
+
+.block.active {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.block.complete strong {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.block-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* ---------- summary ---------- */
+
+.done-list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+}
+
+.done-list li {
+  display: grid;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.done-list li > span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.set-chip {
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.summary-actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+@media (max-width: 560px) {
+  .now {
+    min-height: 0;
+  }
+
+  .stepper-row input {
+    font-size: 1.8rem;
+  }
+
+  .stepper-row .icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .summary-actions .btn {
+    flex: 1;
+  }
+}

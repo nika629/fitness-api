@@ -1,4 +1,4 @@
-﻿namespace WebApplicationLB.Domain.Entities
+namespace WebApplicationLB.Domain.Entities
 {
     internal record WorkoutPlan
     {
@@ -12,5 +12,6 @@
         public User? User { get; set; }
 
         public List<WorkoutExercise> WorkoutExercises { get; set; } = [];
+        public List<WorkoutSession> WorkoutSessions { get; set; } = [];
     }
 }

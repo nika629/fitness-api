@@ -29,6 +29,8 @@ export class Shell {
     { path: '/', label: 'Today', icon: 'home', exact: true },
     { path: '/exercises', label: 'Exercises', icon: 'dumbbell' },
     { path: '/plans', label: 'Plans', icon: 'plans' },
+    { path: '/history', label: 'History', icon: 'history' },
+    { path: '/progress', label: 'Progress', icon: 'chart' },
     { path: '/favorites', label: 'Favorites', icon: 'heart' },
     { path: '/food', label: 'Food log', icon: 'food' },
   ];

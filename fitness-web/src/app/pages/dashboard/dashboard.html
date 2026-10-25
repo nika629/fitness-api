@@ -101,7 +101,36 @@
     </section>
   </div>
 
-  <div class="grid-2">
+  <div class="grid-3">
+    <!-- Recent workouts -->
+    <section class="panel" aria-labelledby="recent-title">
+      <div class="panel-head">
+        <h2 id="recent-title">Recent workouts</h2>
+        <a routerLink="/history">History</a>
+      </div>
+
+      @if (loading()) {
+        <div class="skeleton"></div>
+      } @else if (recent().length === 0) {
+        <div class="empty">
+          <h3>No workouts yet</h3>
+          <p>Open a plan and press “Start workout”.</p>
+          <a class="btn btn-sm btn-primary" routerLink="/plans">Choose a plan</a>
+        </div>
+      } @else {
+        <ul class="rows">
+          @for (s of recent(); track s.workoutSessionID) {
+            <li>
+              <a [routerLink]="['/history', s.workoutSessionID]">
+                <span class="row-title">{{ s.planName }}</span>
+                <span class="muted">{{ s.startedAt | date: 'EEE d MMM' }} · {{ s.durationMinutes }} min</span>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
     <!-- Plans -->
     <section class="panel" aria-labelledby="plans-title">
       <div class="panel-head">

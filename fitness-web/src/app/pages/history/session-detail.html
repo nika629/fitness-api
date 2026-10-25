@@ -1,0 +1,87 @@
+<div class="page">
+  <a class="back" routerLink="/history"><app-icon name="left" [size]="18" /> History</a>
+
+  @if (loading()) {
+    <div class="skeleton" style="min-height: 120px"></div>
+    <div class="skeleton" style="min-height: 280px"></div>
+  } @else if (notFound()) {
+    <div class="empty">
+      <h3>Workout not found</h3>
+      <p>It may have been deleted.</p>
+      <a class="btn btn-sm" routerLink="/history">Back to history</a>
+    </div>
+  } @else if (session(); as s) {
+    <header class="page-head">
+      <div>
+        <h1>{{ s.planName }}</h1>
+        <p>{{ s.startedAt | date: 'EEEE, d MMMM y · HH:mm' }}</p>
+      </div>
+      <div class="form-actions">
+        @if (s.workoutPlanID) {
+          <a class="btn" [routerLink]="['/workout', s.workoutPlanID]"><app-icon name="play" [size]="18" /> Do it again</a>
+        }
+        <button class="btn btn-danger" type="button" (click)="remove()"><app-icon name="trash" [size]="18" /> Delete</button>
+      </div>
+    </header>
+
+    <dl class="summary cols-4">
+      <div>
+        <dt>Time</dt>
+        <dd><span class="num">{{ s.durationMinutes }}</span> min</dd>
+      </div>
+      <div>
+        <dt>Sets</dt>
+        <dd class="num">{{ s.totalSets }}</dd>
+      </div>
+      <div>
+        <dt>Reps</dt>
+        <dd class="num">{{ s.totalReps }}</dd>
+      </div>
+      <div>
+        <dt>Volume</dt>
+        <dd><span class="num">{{ s.totalVolumeKg | number: '1.0-0' }}</span> kg</dd>
+      </div>
+    </dl>
+
+    @if (s.notes) {
+      <blockquote class="notes">{{ s.notes }}</blockquote>
+    }
+
+    <div class="exercises">
+      @for (g of groups(); track g.name) {
+        <section class="panel">
+          <div class="panel-head">
+            <h2>{{ g.name }}</h2>
+            @if (g.best > 0) {
+              <span class="badge badge-blue">Top set {{ g.best }} kg</span>
+            }
+          </div>
+          <table class="sets">
+            <thead>
+              <tr>
+                <th scope="col">Set</th>
+                <th scope="col">Reps</th>
+                <th scope="col">Weight</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (set of g.sets; track set.workoutSessionSetID) {
+                <tr>
+                  <td class="num">{{ set.setNumber }}</td>
+                  <td class="num">{{ set.reps }}</td>
+                  <td>
+                    @if (set.weightKg) {
+                      <span class="num">{{ set.weightKg }}</span> kg
+                    } @else {
+                      <span class="muted">Bodyweight</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </section>
+      }
+    </div>
+  }
+</div>

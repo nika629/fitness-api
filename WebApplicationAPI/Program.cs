@@ -69,6 +69,8 @@ namespace WebApplicationAPI
             builder.Services.AddScoped<WorkoutPlanService>();
             builder.Services.AddScoped<RoleService>();
             builder.Services.AddScoped<DictionaryService>();
+            builder.Services.AddScoped<WorkoutSessionService>();
+            builder.Services.AddScoped<WeightLogService>();
 
             // ---------- JWT authentication ----------
             var jwtKey = builder.Configuration["Jwt:Key"]

@@ -1,0 +1,91 @@
+.month h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.sessions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.sessions a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.sessions a:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+}
+
+.day {
+  display: grid;
+  justify-items: center;
+  width: 48px;
+  flex-shrink: 0;
+  padding: 6px 0;
+  border-radius: var(--r-md);
+  background: var(--blue-soft);
+  line-height: 1;
+}
+
+.day b {
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.day small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.what {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.what strong {
+  font-size: 1.05rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 0.9rem;
+}
+
+.meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chev {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .sessions a {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+}

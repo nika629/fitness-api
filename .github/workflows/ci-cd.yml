@@ -131,8 +131,6 @@ jobs:
             set -e
             chown -R deploy:deploy /var/www/myapp
             chmod -R a+rX /var/www/fitness-web
-            
-            
             systemctl restart myapp
             nginx -t
             systemctl reload nginx

@@ -81,7 +81,17 @@ namespace WebApplicationLB.Infrastructure.Services
             if (dto.UserAge.HasValue) user.UserAge = dto.UserAge;
             if (dto.BirthDate.HasValue) user.BirthDate = DateTimeHelper.ToUtc(dto.BirthDate);
             if (dto.Height.HasValue) user.Height = dto.Height;
-            if (dto.CurrentWeight.HasValue) user.CurrentWeight = dto.CurrentWeight;
+            if (dto.CurrentWeight.HasValue && dto.CurrentWeight != user.CurrentWeight)
+            {
+                // A new weight also goes into the history used by the progress chart
+                _dbContext.WeightLogs.Add(new WeightLog
+                {
+                    UserID = user.UserID,
+                    Weight = dto.CurrentWeight.Value,
+                    LoggedAt = DateTime.UtcNow
+                });
+                user.CurrentWeight = dto.CurrentWeight;
+            }
             if (dto.GoalWeight.HasValue) user.GoalWeight = dto.GoalWeight;
             user.UpdatedAt = DateTime.UtcNow;
 

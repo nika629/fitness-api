@@ -1,0 +1,74 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>History</h1>
+      <p>Every workout you finished. Start one from any plan.</p>
+    </div>
+    <a class="btn" routerLink="/plans"><app-icon name="play" [size]="18" /> Start a workout</a>
+  </header>
+
+  @if (loading()) {
+    <div class="skeleton" style="min-height: 96px"></div>
+    <div class="skeleton" style="min-height: 320px"></div>
+  } @else if (failed()) {
+    <div class="empty">
+      <h3>Couldn't load your history</h3>
+      <p>Check your connection and refresh the page.</p>
+    </div>
+  } @else if (sessions().length === 0) {
+    <div class="empty">
+      <app-icon name="history" [size]="28" />
+      <h3>No workouts yet</h3>
+      <p>Open a plan and press “Start workout”. When you finish, it shows up here.</p>
+      <a class="btn btn-sm btn-primary" routerLink="/plans">Go to plans</a>
+    </div>
+  } @else {
+    <dl class="summary cols-4">
+      <div>
+        <dt>Workouts</dt>
+        <dd class="num">{{ sessions().length }}</dd>
+      </div>
+      <div>
+        <dt>This month</dt>
+        <dd class="num">{{ thisMonth() }}</dd>
+      </div>
+      <div>
+        <dt>Time trained</dt>
+        <dd><span class="num">{{ totalHours() }}</span> h</dd>
+      </div>
+      <div>
+        <dt>Total lifted</dt>
+        <dd><span class="num">{{ totalTonnes() }}</span> t</dd>
+      </div>
+    </dl>
+
+    @for (month of months(); track month.date) {
+      <section class="month" [attr.aria-label]="(month.date | date: 'MMMM y') ?? ''">
+        <h2>{{ month.date | date: 'MMMM y' }}</h2>
+        <ul class="sessions">
+          @for (s of month.items; track s.workoutSessionID) {
+            <li>
+              <a [routerLink]="['/history', s.workoutSessionID]">
+                <span class="day" aria-hidden="true">
+                  <b class="num">{{ s.startedAt | date: 'd' }}</b>
+                  <small>{{ s.startedAt | date: 'EEE' }}</small>
+                </span>
+                <span class="what">
+                  <strong>{{ s.planName }}</strong>
+                  <span class="muted meta">
+                    <span><app-icon name="clock" [size]="14" /> {{ s.durationMinutes }} min</span>
+                    <span>{{ s.totalSets }} sets</span>
+                    @if (s.totalVolumeKg > 0) {
+                      <span>{{ s.totalVolumeKg | number: '1.0-0' }} kg lifted</span>
+                    }
+                  </span>
+                </span>
+                <app-icon class="chev" name="right" [size]="18" />
+              </a>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  }
+</div>

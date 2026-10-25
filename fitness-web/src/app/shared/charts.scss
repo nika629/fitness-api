@@ -1,0 +1,82 @@
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+}
+
+svg {
+  display: block;
+  overflow: visible;
+  touch-action: pan-y;
+}
+
+.grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.axis {
+  fill: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  fill: var(--blue);
+  transition: opacity 0.15s;
+}
+
+.bar.dim {
+  opacity: 0.45;
+}
+
+.hit {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.line {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.dot {
+  fill: var(--blue);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.goal {
+  stroke: var(--green);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+}
+
+.goal-label {
+  fill: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cross {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.tip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 10px));
+  padding: 6px 10px;
+  border-radius: var(--r-md);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.82rem;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow-pop);
+  z-index: 2;
+}

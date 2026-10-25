@@ -133,6 +133,12 @@ namespace WebApplicationLB.Infrastructure.Services
                 return ServiceResponse<bool>.Conflict("This exercise is used in a workout plan and cannot be deleted.");
             }
 
+            var usedInHistory = await _context.WorkoutSessionSets.AnyAsync(s => s.ExerciseID == exerciseID);
+            if (usedInHistory)
+            {
+                return ServiceResponse<bool>.Conflict("This exercise is used in workout history and cannot be deleted.");
+            }
+
             _context.Exercises.Remove(exercise);
             await _context.SaveChangesAsync();
 

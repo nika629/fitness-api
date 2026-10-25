@@ -202,6 +202,30 @@ namespace WebApplicationLB.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WeightLog", b =>
+                {
+                    b.Property<int>("WeightLogID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("WeightLogID"));
+
+                    b.Property<DateTime>("LoggedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("WeightLogID");
+
+                    b.HasIndex("UserID", "LoggedAt");
+
+                    b.ToTable("WeightLogs", (string)null);
+                });
+
             modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutExercise", b =>
                 {
                     b.Property<int>("WorkoutExerciseID")
@@ -270,6 +294,79 @@ namespace WebApplicationLB.Migrations
                     b.ToTable("WorkoutPlans", (string)null);
                 });
 
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutSession", b =>
+                {
+                    b.Property<int>("WorkoutSessionID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("WorkoutSessionID"));
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("FinishedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("PlanName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("WorkoutPlanID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("WorkoutSessionID");
+
+                    b.HasIndex("WorkoutPlanID");
+
+                    b.HasIndex("UserID", "StartedAt");
+
+                    b.ToTable("WorkoutSessions", (string)null);
+                });
+
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutSessionSet", b =>
+                {
+                    b.Property<int>("WorkoutSessionSetID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("WorkoutSessionSetID"));
+
+                    b.Property<int>("ExerciseID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Reps")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SetNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<double?>("WeightKg")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("WorkoutSessionID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("WorkoutSessionSetID");
+
+                    b.HasIndex("ExerciseID");
+
+                    b.HasIndex("WorkoutSessionID");
+
+                    b.ToTable("WorkoutSessionSets", (string)null);
+                });
+
             modelBuilder.Entity("WebApplicationLB.Domain.Entities.Dictionary", b =>
                 {
                     b.HasOne("WebApplicationLB.Domain.Entities.Dictionary", "Parent")
@@ -336,6 +433,17 @@ namespace WebApplicationLB.Migrations
                     b.Navigation("DictionaryRole");
                 });
 
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WeightLog", b =>
+                {
+                    b.HasOne("WebApplicationLB.Domain.Entities.User", "User")
+                        .WithMany("WeightLogs")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutExercise", b =>
                 {
                     b.HasOne("WebApplicationLB.Domain.Entities.Exercise", "Exercise")
@@ -366,6 +474,43 @@ namespace WebApplicationLB.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutSession", b =>
+                {
+                    b.HasOne("WebApplicationLB.Domain.Entities.User", "User")
+                        .WithMany("WorkoutSessions")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApplicationLB.Domain.Entities.WorkoutPlan", "WorkoutPlan")
+                        .WithMany("WorkoutSessions")
+                        .HasForeignKey("WorkoutPlanID")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("User");
+
+                    b.Navigation("WorkoutPlan");
+                });
+
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutSessionSet", b =>
+                {
+                    b.HasOne("WebApplicationLB.Domain.Entities.Exercise", "Exercise")
+                        .WithMany("SessionSets")
+                        .HasForeignKey("ExerciseID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebApplicationLB.Domain.Entities.WorkoutSession", "WorkoutSession")
+                        .WithMany("Sets")
+                        .HasForeignKey("WorkoutSessionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("WorkoutSession");
+                });
+
             modelBuilder.Entity("WebApplicationLB.Domain.Entities.Dictionary", b =>
                 {
                     b.Navigation("Children");
@@ -381,6 +526,8 @@ namespace WebApplicationLB.Migrations
                 {
                     b.Navigation("FavoriteExercises");
 
+                    b.Navigation("SessionSets");
+
                     b.Navigation("WorkoutExercises");
                 });
 
@@ -390,12 +537,23 @@ namespace WebApplicationLB.Migrations
 
                     b.Navigation("FoodLogs");
 
+                    b.Navigation("WeightLogs");
+
                     b.Navigation("WorkoutPlans");
+
+                    b.Navigation("WorkoutSessions");
                 });
 
             modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutPlan", b =>
                 {
                     b.Navigation("WorkoutExercises");
+
+                    b.Navigation("WorkoutSessions");
+                });
+
+            modelBuilder.Entity("WebApplicationLB.Domain.Entities.WorkoutSession", b =>
+                {
+                    b.Navigation("Sets");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,47 @@
+.notes {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 3px solid var(--blue);
+  background: var(--surface);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  color: var(--text);
+}
+
+.exercises {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: clamp(14px, 1.6vw, 24px);
+  align-items: start;
+}
+
+.panel-head h2 {
+  font-size: 1.05rem;
+}
+
+.sets {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sets th {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 0 8px;
+}
+
+.sets td {
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+
+.sets td.num,
+.sets td .num {
+  font-size: 1.25rem;
+}
+
+.sets th:first-child,
+.sets td:first-child {
+  width: 22%;
+}

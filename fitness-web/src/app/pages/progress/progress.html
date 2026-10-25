@@ -1,0 +1,99 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>Progress</h1>
+      <p>Your weight, food and training over time.</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="skeleton" style="min-height: 360px"></div>
+    <div class="grid-2">
+      <div class="skeleton" style="min-height: 280px"></div>
+      <div class="skeleton" style="min-height: 280px"></div>
+    </div>
+  } @else {
+    <!-- Body weight -->
+    <section class="panel" aria-labelledby="weight-title">
+      <div class="panel-head">
+        <h2 id="weight-title">Body weight</h2>
+        <form class="log" (submit)="$event.preventDefault(); logWeight()">
+          <label class="sr-only" for="new-weight">Today's weight in kg</label>
+          <input id="new-weight" class="input num" type="number" inputmode="decimal" min="20" max="400" step="0.1" placeholder="kg"
+                 [value]="newWeight() ?? ''" (input)="setNewWeight($any($event.target).value)" />
+          <button class="btn btn-primary btn-sm" type="submit" [disabled]="savingWeight()">
+            <app-icon name="plus" [size]="16" /> Log weight
+          </button>
+        </form>
+      </div>
+
+      @if (weightStats(); as s) {
+        <div class="stats">
+          <div>
+            <span class="label">Start</span>
+            <span class="num big">{{ s.first }}</span><span class="unit">kg</span>
+          </div>
+          <div>
+            <span class="label">Now</span>
+            <span class="num big">{{ s.last }}</span><span class="unit">kg</span>
+          </div>
+          <div>
+            <span class="label">Change</span>
+            <span class="num big">{{ s.change > 0 ? '+' : s.change < 0 ? '−' : '' }}{{ abs(s.change) }}</span><span class="unit">kg</span>
+          </div>
+          @if (profile()?.goalWeight) {
+            <div>
+              <span class="label">Goal</span>
+              <span class="num big goal">{{ profile()!.goalWeight }}</span><span class="unit">kg</span>
+            </div>
+          }
+        </div>
+        <app-line-chart [points]="weightPoints()" [goal]="profile()?.goalWeight ?? null" unit="kg" [height]="280" label="Body weight over time" />
+      } @else {
+        <div class="empty">
+          <app-icon name="scale" [size]="28" />
+          <h3>No weigh-ins yet</h3>
+          <p>Log your weight above. Each new weigh-in adds a point to the chart.</p>
+        </div>
+      }
+    </section>
+
+    <div class="grid-2">
+      <!-- Calories -->
+      <section class="panel" aria-labelledby="kcal-title">
+        <div class="panel-head">
+          <h2 id="kcal-title">Calories, last 14 days</h2>
+          <a routerLink="/food">Food log</a>
+        </div>
+        @if (calorieAverage() > 0) {
+          <p class="headline"><span class="num">{{ calorieAverage() | number: '1.0-0' }}</span><span class="muted"> kcal a day on average</span></p>
+          <app-bar-chart [data]="calorieBars()" label="Calories per day for the last 14 days" />
+        } @else {
+          <div class="empty">
+            <h3>No food logged in the last 2 weeks</h3>
+            <p>Meals you add to the food log show up here.</p>
+            <a class="btn btn-sm" routerLink="/food">Log food</a>
+          </div>
+        }
+      </section>
+
+      <!-- Workouts -->
+      <section class="panel" aria-labelledby="weeks-title">
+        <div class="panel-head">
+          <h2 id="weeks-title">Workouts per week</h2>
+          <a routerLink="/history">History</a>
+        </div>
+        @if (hasWorkouts()) {
+          <p class="headline"><span class="num">{{ workoutsLast4Weeks() }}</span><span class="muted"> workouts in the last 4 weeks</span></p>
+          <app-bar-chart [data]="weekBars()" label="Workouts per week for the last 8 weeks" />
+        } @else {
+          <div class="empty">
+            <h3>No workouts yet</h3>
+            <p>Start a workout from one of your plans.</p>
+            <a class="btn btn-sm" routerLink="/plans">Go to plans</a>
+          </div>
+        }
+      </section>
+    </div>
+  }
+</div>

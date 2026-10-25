@@ -40,6 +40,9 @@ Controller-ები მხოლოდ HTTP-ს ამუშავებენ,
 | `WorkoutExercises` | ვარჯიში გეგმაში (sets, reps, დასვენების დრო, რიგითობა) |
 | `FavoriteExercises` | მომხმარებლის ფავორიტი ვარჯიშები (composite key: UserID + ExerciseID) |
 | `FoodLogs` | კვების ჩანაწერები |
+| `WorkoutSessions` | ჩატარებული ვარჯიში: გეგმა (`SET NULL` გეგმის წაშლისას), გეგმის სახელის snapshot, დაწყება/დასრულება, ხანგრძლივობა, შენიშვნა |
+| `WorkoutSessionSets` | ვარჯიშში შესრულებული სეტი: ვარჯიში, სეტის ნომერი, გამეორებები, წონა (კგ). Session-ის წაშლისას იშლება (`CASCADE`), Exercise-ზე `RESTRICT` |
+| `WeightLogs` | წონის ისტორია პროგრესის გრაფიკისთვის (პროფილში წონის შეცვლა აქაც წერს) |
 
 `Dictionaries` (`DictionaryID`):
 * **როლები** (ჯგუფი 1): Admin = 1, User = 2
@@ -136,6 +139,14 @@ SQL script-ები: [`database/`](database/README.md).
 | GET | `/api/FoodLog/{userID}/foodLog/{foodLogID}` | თავად / Admin | ერთი |
 | POST | `/api/FoodLog/{userID}/foodLog` | თავად / Admin | დამატება |
 | DELETE | `/api/FoodLog/{userID}/foodLog/{foodLogID}` | თავად / Admin | წაშლა |
+| **WorkoutSession** ||||
+| GET | `/api/WorkoutSession/{userID}/workout-sessions` | თავად / Admin | ვარჯიშების ისტორია (ახალი ზემოთ, ჯამებით: სეტები, გამეორებები, მოცულობა) |
+| GET | `/api/WorkoutSession/{userID}/workout-sessions/{sessionID}` | თავად / Admin | ერთი ვარჯიში ყველა სეტით |
+| POST | `/api/WorkoutSession/{userID}/workout-sessions` | თავად / Admin | დასრულებული ვარჯიშის შენახვა სეტებით (ერთ ტრანზაქციაში) |
+| DELETE | `/api/WorkoutSession/{userID}/workout-sessions/{sessionID}` | თავად / Admin | წაშლა |
+| **WeightLog** ||||
+| GET | `/api/WeightLog/{userID}/weight-logs` | თავად / Admin | წონის ისტორია (ძველიდან ახლისკენ) |
+| POST | `/api/WeightLog/{userID}/weight-logs` | თავად / Admin | აწონვის დამატება (`CurrentWeight`-საც ანახლებს) |
 | **Health** ||||
 | GET | `/health` | ყველას | სერვერის მდგომარეობა (CI/CD-სთვის) |
 
@@ -154,7 +165,7 @@ SQL script-ები: [`database/`](database/README.md).
 ## Unit ტესტები
 
 `WebApplicationAPI.Tests` (xUnit). ყოველი ტესტი ქმნის ცარიელ **in-memory** ბაზას, ამიტომ რეალურ ბაზას არ ეხება. ტესტები Arrange → Act → Assert სტრუქტურით არის დაწერილი და ამოწმებს:
-რეგისტრაციას და login-ს, დუბლიკატ ელფოსტას (409), არასწორ პაროლს (401), როლის მინიჭებას არასწორი ID-ით (400), ელფოსტის შეცვლას არასწორი პაროლით, პროფილის ნაწილობრივ განახლებას, Workout Plan-ის შექმნას UTC დროით, სხვისი გეგმის/FoodLog-ის შეცვლის აკრძალვას და ფავორიტების დუბლიკატს.
+რეგისტრაციას და login-ს, დუბლიკატ ელფოსტას (409), არასწორ პაროლს (401), როლის მინიჭებას არასწორი ID-ით (400), ელფოსტის შეცვლას არასწორი პაროლით, პროფილის ნაწილობრივ განახლებას, Workout Plan-ის შექმნას UTC დროით, სხვისი გეგმის/FoodLog-ის შეცვლის აკრძალვას, ფავორიტების დუბლიკატს, ვარჯიშის შენახვას და ჯამების დათვლას (მოცულობა = Σ reps × kg), სხვისი გეგმით ვარჯიშის აკრძალვას და იმას, რომ წონის შეცვლა `WeightLogs`-ში ჩანაწერს ამატებს (სულ 13 ტესტი).
 
 ---
 

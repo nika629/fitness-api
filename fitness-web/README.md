@@ -31,8 +31,10 @@ src/app/
   core/       models, API services, signal stores (auth, favorites, lookups, toast, theme, confirm),
               JWT interceptor, route guards
   layout/     app shell: sidebar on desktop, bottom tabs + drawer on phones
-  shared/     icon, modal, confirm dialog, toasts, barbell (macros visual), exercise card, add-to-plan dialog
-  pages/      auth (login, register), dashboard, exercises, plans + plan detail, favorites, food log, profile,
+  shared/     icon, modal, confirm dialog, toasts, barbell (macros visual), exercise card, add-to-plan dialog,
+              charts (SVG line + bar chart with tooltips)
+  pages/      auth (login, register), dashboard, exercises, plans + plan detail, workout player,
+              history + workout detail, progress (charts), favorites, food log, profile,
               admin (users, manage exercises, categories), not-found
 ```
 
@@ -40,7 +42,7 @@ src/app/
 
 | Page | User | Admin |
 |---|---|---|
-| Today, Exercises, Plans, Favorites, Food log, Profile | ✓ | ✓ |
+| Today, Exercises, Plans, Workout, History, Progress, Favorites, Food log, Profile | ✓ | ✓ |
 | Admin → Users (change role, delete) | – | ✓ |
 | Admin → Manage exercises (add, edit, delete) | – | ✓ |
 | Admin → Categories (equipment, muscle groups) | – | ✓ |
@@ -57,6 +59,11 @@ Shared state lives in small services built on Angular **signals**:
 - `ToastStore`, `ConfirmStore`, `ThemeStore` – notifications, "are you sure?" dialog, dark/light theme
 
 Pages keep their own data in `signal()`s and derive totals with `computed()` (e.g. the day's calories and macros).
+
+The **workout player** (`pages/workout`) is the biggest piece of state: the plan's exercises become blocks of sets,
+a one-second clock signal drives the workout timer and the rest countdown, and everything else (progress bar,
+volume, rest ring) is `computed()` from those signals. The in-progress workout is copied to localStorage, so a page
+refresh doesn't lose it; it is sent to the API only once, when the user presses **Save workout**.
 
 ## Design
 

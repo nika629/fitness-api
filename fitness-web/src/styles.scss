@@ -590,3 +590,83 @@ a:hover {
 .diff-beginner { --diff: var(--green); }
 .diff-intermediate { --diff: var(--yellow); }
 .diff-advanced { --diff: var(--red); }
+
+/* ---------- Shared page pieces: back link + summary strip ---------- */
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: -8px;
+  width: fit-content;
+}
+
+.back:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+.summary div {
+  padding: 16px 20px;
+}
+
+.summary div + div {
+  border-left: 1px solid var(--line);
+}
+
+.summary dt {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.summary dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.summary .num {
+  font-size: 2.4rem;
+  color: var(--text);
+}
+
+@media (max-width: 520px) {
+  .summary div {
+    padding: 12px 14px;
+  }
+
+  .summary .num {
+    font-size: 1.9rem;
+  }
+}
+
+
+.summary.cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 640px) {
+  .summary.cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summary.cols-4 div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .summary.cols-4 div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}

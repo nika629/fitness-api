@@ -169,3 +169,47 @@ export const DictionaryGroup = {
 } as const;
 
 export const DIFFICULTIES: Difficulty[] = ['Beginner', 'Intermediate', 'Advanced'];
+
+// ----- Workout history (finished workouts) -----
+
+export interface WorkoutSessionSet {
+  workoutSessionSetID: number;
+  exerciseID: number;
+  exerciseName: string;
+  setNumber: number;
+  reps: number;
+  weightKg: number | null;
+}
+
+export interface WorkoutSession {
+  workoutSessionID: number;
+  userID: number;
+  workoutPlanID: number | null;
+  planName: string;
+  startedAt: string;
+  finishedAt: string;
+  durationMinutes: number;
+  notes: string | null;
+  totalSets: number;
+  totalReps: number;
+  totalVolumeKg: number;
+  /** Only filled when one session is requested */
+  sets: WorkoutSessionSet[];
+}
+
+export interface WorkoutSessionInput {
+  workoutPlanID: number | null;
+  startedAt: string;
+  finishedAt: string;
+  notes?: string | null;
+  sets: { exerciseID: number; setNumber: number; reps: number; weightKg: number | null }[];
+}
+
+// ----- Body weight history -----
+
+export interface WeightLog {
+  weightLogID: number;
+  userID: number;
+  weight: number;
+  loggedAt: string;
+}
