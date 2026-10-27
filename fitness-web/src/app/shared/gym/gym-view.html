@@ -1,0 +1,107 @@
+<section class="gym" #stage aria-label="3D gym. Click a zone to see the exercises for that equipment.">
+  @if (status() === 'loading') {
+    <p class="state">Building your gym…</p>
+  } @else if (status() === 'failed') {
+    <p class="state">Your browser can't show the 3D gym. Everything else on this page works as usual.</p>
+  }
+
+  <canvas #canvas (pointerdown)="touched.set(true)"></canvas>
+
+  <div class="pins" [class.hidden]="status() !== 'ready'">
+    @for (z of zones; track z.key) {
+      <button
+        #pin
+        type="button"
+        class="pin"
+        [class.next]="nextZones().includes(z)"
+        [class.active]="selected() === z.key"
+        [attr.aria-label]="z.name + ', ' + count(z.key) + ' exercises'"
+        (click)="open(z.key)"
+      >
+        <i [style.background]="z.color"></i>{{ z.name }}<small>{{ count(z.key) }}</small>
+      </button>
+    }
+  </div>
+
+  <div class="top">
+    <div class="card-glass">
+      @if (upNext(); as next) {
+        <p class="eyebrow">Up next</p>
+        <strong>{{ next.plan.workoutPlanName }} · {{ next.exerciseIds.length }} {{ next.exerciseIds.length === 1 ? 'exercise' : 'exercises' }}</strong>
+        <div class="chips">
+          @for (z of nextZones(); track z.key) {
+            <button type="button" class="chip-z" (click)="open(z.key)"><i [style.background]="z.color"></i>{{ z.name }}</button>
+          }
+          <a class="go" [routerLink]="['/workout', next.plan.workoutPlanID]"><app-icon name="play" [size]="14" /> Start</a>
+        </div>
+      } @else {
+        <p class="eyebrow">Your gym</p>
+        <strong>Pick a zone to see its exercises</strong>
+        <a class="go solo" routerLink="/plans">Create a plan</a>
+      }
+    </div>
+    <div class="tools">
+      <button class="tool rotate" type="button" [attr.aria-pressed]="autoRotate()" (click)="toggleRotate()">Auto-rotate</button>
+      <button class="tool" type="button" (click)="reset()">Reset view</button>
+    </div>
+  </div>
+
+  @if (status() === 'ready' && !touched()) {
+    <p class="hint">Drag to rotate · Scroll or pinch to zoom · Click equipment</p>
+  }
+
+  <aside class="panel" [class.open]="!!zone()" aria-live="polite" [attr.aria-hidden]="!zone()">
+    @if (zone(); as z) {
+      <header>
+        <div class="ptitle">
+          <i [style.background]="z.color"></i>
+          <h2>{{ z.name }}</h2>
+          <button class="close" type="button" aria-label="Close" (click)="close()"><app-icon name="x" [size]="18" /></button>
+        </div>
+        @if (zoneExercises().length) {
+          <p class="sub">{{ zoneExercises().length }} {{ zoneExercises().length === 1 ? 'exercise uses' : 'exercises use' }} this equipment</p>
+        } @else {
+          <p class="sub">No exercises use this equipment yet</p>
+        }
+        @if (nextZones().includes(z)) {
+          <span class="tag">In your next workout</span>
+        }
+      </header>
+      <ul class="list">
+        @for (e of zoneExercises(); track e.exerciseID) {
+          <li class="row">
+            <strong>{{ e.exerciseName }}</strong>
+            <span class="meta">
+              <span>{{ e.muscleGroupName }}</span>
+              <span [class]="'diff d-' + e.exerciseDifficulty">{{ e.exerciseDifficulty }}</span>
+              @if (isNext(e.exerciseID)) {
+                <span>· next workout</span>
+              }
+            </span>
+            <span class="acts">
+              <button
+                class="fav"
+                type="button"
+                [attr.aria-pressed]="favorites.isFavorite(e.exerciseID)"
+                [attr.aria-label]="(favorites.isFavorite(e.exerciseID) ? 'Remove ' : 'Add ') + e.exerciseName + (favorites.isFavorite(e.exerciseID) ? ' from favorites' : ' to favorites')"
+                (click)="toggleFavorite(e)"
+              >
+                <app-icon name="heart" [size]="16" />
+              </button>
+              <button class="add" type="button" (click)="adding.set(e)">Add to plan</button>
+            </span>
+          </li>
+        } @empty {
+          <li class="empty-row">
+            <strong>Nothing here yet</strong>
+            <span>An admin can add a “{{ z.name }}” category in Admin → Categories and add exercises with it. They will show up here.</span>
+          </li>
+        }
+      </ul>
+    }
+  </aside>
+</section>
+
+@if (adding(); as e) {
+  <app-add-to-plan [exerciseId]="e.exerciseID" [exerciseName]="e.exerciseName" (closed)="adding.set(null)" />
+}

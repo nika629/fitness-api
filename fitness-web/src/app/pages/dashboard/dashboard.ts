@@ -1,20 +1,23 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, untracked } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { toDateKey } from '../../core/api';
 import { AuthStore } from '../../core/auth.store';
 import { FavoritesStore } from '../../core/favorites.store';
 import { FoodService, sumMacros } from '../../core/food.service';
-import { FoodLog, UserProfile, WorkoutPlan, WorkoutSession } from '../../core/models';
+import { Exercise, FoodLog, UserProfile, WorkoutExercise, WorkoutPlan, WorkoutSession } from '../../core/models';
+import { ExerciseService } from '../../core/exercise.service';
 import { PlanService } from '../../core/plan.service';
 import { SessionService } from '../../core/session.service';
 import { UserService } from '../../core/user.service';
 import { Barbell } from '../../shared/barbell';
+import { GymView, UpNext } from '../../shared/gym/gym-view';
+import { zoneForEquipment } from '../../shared/gym/gym-zones';
 import { Icon } from '../../shared/icon';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [RouterLink, DatePipe, DecimalPipe, Barbell, Icon],
+  imports: [RouterLink, DatePipe, DecimalPipe, Barbell, GymView, Icon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -26,6 +29,7 @@ export class DashboardPage {
   private readonly plansApi = inject(PlanService);
   private readonly users = inject(UserService);
   private readonly sessionsApi = inject(SessionService);
+  private readonly exercisesApi = inject(ExerciseService);
 
   protected readonly today = new Date();
   protected readonly loading = signal(true);
@@ -33,6 +37,34 @@ export class DashboardPage {
   protected readonly plans = signal<WorkoutPlan[]>([]);
   private readonly logs = signal<FoodLog[]>([]);
   private readonly sessions = signal<WorkoutSession[]>([]);
+
+  protected readonly exercises = signal<Exercise[]>([]);
+  private readonly nextItems = signal<WorkoutExercise[]>([]);
+
+  /** The plan trained longest ago (or never) – that's the one to do next */
+  private readonly nextPlan = computed(() => {
+    const lastDone = new Map<number, number>();
+    for (const s of this.sessions()) {
+      if (s.workoutPlanID == null) continue;
+      const t = new Date(s.startedAt).getTime();
+      lastDone.set(s.workoutPlanID, Math.max(lastDone.get(s.workoutPlanID) ?? 0, t));
+    }
+    const candidates = this.plans().filter((p) => p.exerciseCount > 0);
+    if (candidates.length === 0) return null;
+    return candidates.reduce((best, p) =>
+      (lastDone.get(p.workoutPlanID) ?? 0) < (lastDone.get(best.workoutPlanID) ?? 0) ? p : best,
+    );
+  });
+
+  /** Next plan + the gym zones its exercises use, for the 3D gym */
+  protected readonly upNext = computed<UpNext | null>(() => {
+    const plan = this.nextPlan();
+    if (!plan) return null;
+    const equipment = new Map(this.exercises().map((e) => [e.exerciseID, e.equipmentName]));
+    const exerciseIds = this.nextItems().map((i) => i.exerciseID);
+    const zoneKeys = [...new Set(exerciseIds.map((id) => zoneForEquipment(equipment.get(id))).filter((k): k is string => !!k))];
+    return { plan, exerciseIds, zoneKeys };
+  });
 
   /** The last three finished workouts */
   protected readonly recent = computed(() => this.sessions().slice(0, 3));
@@ -88,6 +120,19 @@ export class DashboardPage {
     this.plansApi.list(userId).subscribe({ next: (p) => this.plans.set(p), complete: done, error: done });
     this.food.list(userId).subscribe({ next: (l) => this.logs.set(l), complete: done, error: done });
     this.sessionsApi.list(userId).subscribe({ next: (s) => this.sessions.set(s), complete: done, error: done });
+    this.exercisesApi.list().subscribe({ next: (list) => this.exercises.set(list) });
+
+    // load the exercises of the next plan whenever it changes
+    effect(() => {
+      const plan = this.nextPlan();
+      untracked(() => {
+        if (!plan) {
+          this.nextItems.set([]);
+          return;
+        }
+        this.plansApi.exercises(userId, plan.workoutPlanID).subscribe({ next: (items) => this.nextItems.set(items) });
+      });
+    });
   }
 
   protected abs(n: number): number {

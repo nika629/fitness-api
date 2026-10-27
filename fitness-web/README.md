@@ -32,7 +32,7 @@ src/app/
               JWT interceptor, route guards
   layout/     app shell: sidebar on desktop, bottom tabs + drawer on phones
   shared/     icon, modal, confirm dialog, toasts, barbell (macros visual), exercise card, add-to-plan dialog,
-              charts (SVG line + bar chart with tooltips)
+              charts (SVG line + bar chart with tooltips), gym/ (interactive 3D gym, three.js)
   pages/      auth (login, register), dashboard, exercises, plans + plan detail, workout player,
               history + workout detail, progress (charts), favorites, food log, profile,
               admin (users, manage exercises, categories), not-found
@@ -71,3 +71,20 @@ Dark and light theme (toggle in the sidebar / top bar). Colours come from compet
 red = protein / danger, blue = primary actions, yellow = carbs, green = fat / success.
 The font is Archivo (self-hosted from npm), whose width axis gives the condensed numbers.
 Fully responsive: sidebar ≥ 769 px, bottom tab bar and slide-in menu on phones, tables turn into cards.
+
+
+## 3D gym (Today page)
+
+`shared/gym/` draws an interactive 3D gym with [three.js](https://threejs.org):
+
+- `gym-equipment.ts` – the equipment (racks, benches, machines, treadmills…) built in code from boxes,
+  cylinders and spheres, so there are no model files to download
+- `gym-world.ts` – renderer, camera, lights, room, zones, hover/click (raycasting) and camera flights
+- `gym-zones.ts` – the zones; each matches an equipment category from the database
+- `gym-view.ts` – the Angular component: label pins, the side panel with the zone's exercises
+  (♥ favorites, Add to plan) and the "Up next" card
+
+The zone of every exercise comes from its equipment (`Barbell`, `Cable`, `Machine`…). The plan trained longest
+ago is shown as **Up next**, and the zones it uses get a pulsing ring. three.js is loaded with a dynamic
+`import()` only when the Today page opens, so the rest of the app stays light, and rendering pauses while the
+gym is scrolled out of view.
