@@ -96,13 +96,12 @@ namespace WebApplicationAPI
 
             // ---------- HTTP pipeline ----------
 
-            // Nginx sits in front of the app: trust its X-Forwarded-* headers
+          
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            // Any unhandled exception -> logged + 500 with a JSON body (no stack trace sent to the client)
             app.UseExceptionHandler(errorApp => errorApp.Run(async context =>
             {
                 var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
