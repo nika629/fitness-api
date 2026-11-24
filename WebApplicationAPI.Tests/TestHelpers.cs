@@ -10,8 +10,7 @@ namespace WebApplicationAPI.Tests
     // დამხმარე მეთოდები ყველა ტესტისთვის
     internal static class TestHelpers
     {
-        // ყოველ ტესტს ახალი, ცარიელი ბაზა მეხსიერებაში (რეალურ ბაზას არ ეხება).
-        // ID-ები იგივეა, რაც რეალურ ბაზაში: Admin = 1, User = 2, Barbell = 3, Chest = 12
+      
         internal static ApplicationDbContext CreateDb()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -70,7 +69,6 @@ namespace WebApplicationAPI.Tests
         }));
     }
 
-    // მარტივი IConfiguration, რომ TokenService შევქმნათ appsettings.json-ის გარეშე
     internal sealed class FakeConfiguration : IConfiguration
     {
         private readonly Dictionary<string, string?> _values;

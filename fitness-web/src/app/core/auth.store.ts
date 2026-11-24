@@ -7,11 +7,7 @@ import { AuthResponse, LoginRequest, RegisterRequest, Session } from './models';
 
 const STORAGE_KEY = 'fitness.session';
 
-/**
- * Global auth state (signals).
- * Keeps the logged-in user and JWT token, saves them in localStorage
- * so the user stays logged in after a page refresh.
- */
+
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   private readonly http = inject(HttpClient);
@@ -81,7 +77,7 @@ export class AuthStore {
   }
 }
 
-/** Reads the "exp" claim from a JWT (seconds since 1970). */
+
 function readExpiry(token: string): number {
   try {
     const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');

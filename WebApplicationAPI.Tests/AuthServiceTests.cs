@@ -9,11 +9,10 @@ namespace WebApplicationAPI.Tests
         [Fact]
         public async Task Register_NewUser_GetsUserRoleAndToken()
         {
-            // Arrange (მომზადება)
             using var db = TestHelpers.CreateDb();
             var service = new AuthService(db, TestHelpers.CreateTokenService());
 
-            // Act (მოქმედება)
+          
             var result = await service.RegisterUser(new RegisterUserDTO
             {
                 UserName = "Nika",
@@ -22,7 +21,6 @@ namespace WebApplicationAPI.Tests
                 UserPassword = "secret123"
             });
 
-            // Assert (შემოწმება)
             Assert.True(result.IsSuccessful);
             Assert.Equal("User", result.Data!.Role);
             Assert.False(string.IsNullOrEmpty(result.Data.Token));

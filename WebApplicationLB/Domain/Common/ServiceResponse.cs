@@ -6,7 +6,7 @@ namespace WebApplicationLB.Domain.Common
         public bool IsSuccessful { get; set; } = false;
         public string ErrorMessage { get; set; } = string.Empty;
 
-        // HTTP status code the controller should return (200, 400, 401, 404, 409 ...)
+     
         public int StatusCode { get; set; } = 200;
 
         public static ServiceResponse<T> Success(T data) =>

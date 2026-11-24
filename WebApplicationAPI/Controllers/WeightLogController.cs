@@ -5,7 +5,6 @@ using WebApplicationLB.Infrastructure.Services.WeightLogs;
 
 namespace WebApplicationAPI.Controllers
 {
-    // Body weight history (progress chart)
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]

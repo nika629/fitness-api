@@ -34,7 +34,7 @@ namespace WebApplicationLB.Infrastructure.Services
                 return ServiceResponse<bool>.NotFound($"User with ID {userID} not found.");
             }
 
-            // roleID is the DictionaryID of a role row (Admin = 1, User = 2)
+       
             var roleExists = await _dbContext.Dictionaries
                 .AnyAsync(r => r.DictionaryID == roleID && r.DictionaryGroupIntCode == DictionaryGroups.Roles);
             if (!roleExists)
@@ -74,7 +74,7 @@ namespace WebApplicationLB.Infrastructure.Services
                 return ServiceResponse<UserResponseDTO>.NotFound("User not found.");
             }
 
-            // Only overwrite the fields that were actually sent
+           
             if (!string.IsNullOrWhiteSpace(dto.UserName)) user.UserName = dto.UserName.Trim();
             if (!string.IsNullOrWhiteSpace(dto.UserLastName)) user.UserLastName = dto.UserLastName.Trim();
             if (dto.UserPhone != null) user.UserPhone = dto.UserPhone.Trim();
@@ -83,7 +83,7 @@ namespace WebApplicationLB.Infrastructure.Services
             if (dto.Height.HasValue) user.Height = dto.Height;
             if (dto.CurrentWeight.HasValue && dto.CurrentWeight != user.CurrentWeight)
             {
-                // A new weight also goes into the history used by the progress chart
+            
                 _dbContext.WeightLogs.Add(new WeightLog
                 {
                     UserID = user.UserID,

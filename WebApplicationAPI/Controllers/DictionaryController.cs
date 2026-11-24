@@ -19,7 +19,6 @@ namespace WebApplicationAPI.Controllers
             _dictionaryService = dictionaryService;
         }
 
-        // 1 = Roles, 2 = Equipment, 3 = Muscle groups. Any logged-in user can read (needed for dropdowns).
         [HttpGet("group/{groupCode}")]
         public async Task<ActionResult<List<DictionaryResponseDTO>>> GetByGroup(int groupCode)
         {

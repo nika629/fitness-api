@@ -17,7 +17,6 @@ namespace WebApplicationLB.Infrastructure.Services
             _context = context;
         }
 
-        // Single place that turns an Exercise row into the DTO (translated to SQL by EF)
         private static readonly Expression<Func<Exercise, ExerciseResponseDTO>> ToDto = e => new ExerciseResponseDTO
         {
             ExerciseID = e.ExerciseID,
@@ -106,7 +105,6 @@ namespace WebApplicationLB.Infrastructure.Services
                 return ServiceResponse<ExerciseResponseDTO>.Fail(validationError);
             }
 
-            // Only overwrite the fields that were actually sent
             if (!string.IsNullOrWhiteSpace(dto.ExerciseName)) exercise.ExerciseName = dto.ExerciseName.Trim();
             if (dto.ExerciseDescription != null) exercise.ExerciseDescription = dto.ExerciseDescription.Trim();
             if (!string.IsNullOrWhiteSpace(dto.ExerciseDifficulty)) exercise.ExerciseDifficulty = dto.ExerciseDifficulty.Trim();
@@ -144,22 +142,26 @@ namespace WebApplicationLB.Infrastructure.Services
 
             return ServiceResponse<bool>.Success(true);
         }
-
-        // Returns an error message, or null when the IDs are valid
         private async Task<string?> ValidateDictionaryIds(int? muscleGroupId, int? equipmentId)
         {
             if (muscleGroupId.HasValue)
             {
                 var ok = await _context.Dictionaries.AnyAsync(d =>
                     d.DictionaryID == muscleGroupId.Value && d.DictionaryGroupIntCode == DictionaryGroups.MuscleGroups);
-                if (!ok) return $"Muscle group with ID {muscleGroupId} does not exist.";
+                if (!ok) 
+                { 
+                    return $"Muscle group with ID {muscleGroupId} does not exist."; 
+                }
             }
 
             if (equipmentId.HasValue)
             {
                 var ok = await _context.Dictionaries.AnyAsync(d =>
                     d.DictionaryID == equipmentId.Value && d.DictionaryGroupIntCode == DictionaryGroups.Equipment);
-                if (!ok) return $"Equipment with ID {equipmentId} does not exist.";
+                if (!ok)
+                {
+                    return $"Equipment with ID {equipmentId} does not exist.";
+                }
             }
 
             return null;

@@ -17,8 +17,6 @@ namespace WebApplicationAPI.Controllers
         {
             _exerciseService = exerciseService;
         }
-
-        // Optional filters: ?muscleGroupId=12&equipmentId=3&search=press
         [HttpGet("exercises")]
         public async Task<ActionResult<List<ExerciseResponseDTO>>> GetAllExercises(
             [FromQuery] int? muscleGroupId, [FromQuery] int? equipmentId, [FromQuery] string? search)

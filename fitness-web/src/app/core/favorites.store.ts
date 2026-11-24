@@ -5,10 +5,7 @@ import { API } from './api';
 import { AuthStore } from './auth.store';
 import { FavoriteExercise } from './models';
 
-/**
- * Favorites shared by every page (catalog hearts, favorites page, dashboard).
- * Loaded once, then kept in sync locally after each add/remove.
- */
+
 @Injectable({ providedIn: 'root' })
 export class FavoritesStore {
   private readonly http = inject(HttpClient);

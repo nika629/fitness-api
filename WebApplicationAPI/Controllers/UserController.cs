@@ -18,7 +18,6 @@ namespace WebApplicationAPI.Controllers
             _userService = userService;
         }
 
-        // The logged-in user's own profile (userID taken from the token)
         [HttpGet("me")]
         public async Task<ActionResult<UserResponseDTO>> GetMe()
         {
@@ -32,7 +31,6 @@ namespace WebApplicationAPI.Controllers
             return FromResult(await _userService.GetAllUsers());
         }
 
-        // roleID = DictionaryID of the role (Admin = 1, User = 2). The user must log in again to get a new token.
         [HttpPut("{userID}/assignRole")]
         [Authorize(Roles = RoleNames.Admin)]
         public async Task<ActionResult<bool>> AssignRole(int userID, [FromQuery] int roleID)
@@ -54,7 +52,6 @@ namespace WebApplicationAPI.Controllers
             return FromResult(await _userService.UpdateUser(userID, dto));
         }
 
-        // Only the user themself (they must know the current password)
         [HttpPut("{userID}/email")]
         public async Task<ActionResult<bool>> ChangeEmail(int userID, ChangeUserEmailDTO dto)
         {

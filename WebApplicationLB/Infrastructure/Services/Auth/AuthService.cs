@@ -59,7 +59,6 @@ namespace WebApplicationLB.Infrastructure.Services
                 .Include(u => u.DictionaryRole)
                 .FirstOrDefaultAsync(u => u.UserEmail.ToLower() == email);
 
-            // Same message for wrong email and wrong password, so nobody can guess which emails exist
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginDTO.UserPassword, user.UserPasswordHash))
             {
                 return ServiceResponse<AuthResponseDTO>.Fail("Invalid email or password.", 401);

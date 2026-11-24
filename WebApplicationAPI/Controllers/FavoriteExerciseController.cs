@@ -24,7 +24,7 @@ namespace WebApplicationAPI.Controllers
             return FromResult(await _favoriteExerciseService.GetAllFavoritesByUser(userID));
         }
 
-        // exerciseID = the ID of the exercise that is in favorites
+        
         [HttpGet("{userID}/favoriteExercise/{exerciseID}")]
         public async Task<ActionResult<FavoriteExerciseResponseDTO>> GetFavoriteExerciseById(int userID, int exerciseID)
         {

@@ -86,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: http://143.244.165.211
+      url: http://162.243.214.250
 
     steps:
       - name: Checkout code (for the Nginx config)

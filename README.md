@@ -178,4 +178,4 @@ SQL script-ები: [`database/`](database/README.md).
 
 **GitHub Secrets:** `SSH_PRIVATE_KEY`, `SERVER_HOST`, `SERVER_USER`.
 
-**სერვერი:** Nginx (port 80): `/` → Angular, `/api`, `/swagger`, `/health` → Kestrel (`127.0.0.1:5000`). საიტი: http://143.244.165.211. საიდუმლოები (ბაზის პაროლი, JWT key) Git-ში **არ ინახება**: სერვერზე ისინი `/etc/myapp/myapp.env`-შია (მაგალითი: `deploy/myapp.env.example`) და `appsettings.json`-ს environment variable-ით ცვლის (`ConnectionStrings__DefaultConnection`, `Jwt__Key`).
+**სერვერი:** Nginx (port 80): `/` → Angular, `/api`, `/swagger`, `/health` → Kestrel (`127.0.0.1:5000`). საიტი: http://162.243.214.250. საიდუმლოები (ბაზის პაროლი, JWT key) Git-ში **არ ინახება**: სერვერზე ისინი `/etc/myapp/myapp.env`-შია (მაგალითი: `deploy/myapp.env.example`) და `appsettings.json`-ს environment variable-ით ცვლის (`ConnectionStrings__DefaultConnection`, `Jwt__Key`).

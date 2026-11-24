@@ -17,7 +17,6 @@ namespace WebApplicationAPI.Controllers
             _foodLogService = foodLogService;
         }
 
-        // Optional: ?date=2026-10-15 returns only that day's logs
         [HttpGet("{userID}/foodLogs")]
         public async Task<ActionResult<List<FoodLogResponseDTO>>> GetAllFoodLogByUser(int userID, [FromQuery] DateTime? date)
         {

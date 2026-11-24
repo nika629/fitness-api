@@ -14,8 +14,6 @@ namespace WebApplicationLB.Infrastructure.Services
         {
             _context = context;
         }
-
-        // date (optional) = only the logs of that day (UTC)
         public async Task<ServiceResponse<List<FoodLogResponseDTO>>> GetAllFoodLogByUser(int userID, DateTime? date = null)
         {
             var query = _context.FoodLogs.Where(f => f.UserID == userID);

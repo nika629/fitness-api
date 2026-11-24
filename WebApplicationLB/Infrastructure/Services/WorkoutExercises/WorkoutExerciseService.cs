@@ -15,7 +15,6 @@ namespace WebApplicationLB.Infrastructure.Services
             _context = context;
         }
 
-        // Workout exercises that belong to one of the user's plans
         private IQueryable<WorkoutExerciseResponseDTO> QueryForUser(int userID) =>
             _context.WorkoutExercises
                 .Where(w => w.WorkoutPlan!.UserID == userID)

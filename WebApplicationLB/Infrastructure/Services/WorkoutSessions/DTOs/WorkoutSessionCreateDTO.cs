@@ -2,10 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationLB.Infrastructure.Services.WorkoutSessions
 {
-    // What the app sends when the user presses "Finish workout"
     public class WorkoutSessionCreateDTO
     {
-        // Optional: null = a free workout without a plan
         public int? WorkoutPlanID { get; set; }
 
         [Required]

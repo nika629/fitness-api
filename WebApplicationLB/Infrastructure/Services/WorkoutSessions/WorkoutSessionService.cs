@@ -6,7 +6,7 @@ using WebApplicationLB.Infrastructure.Services.WorkoutSessions;
 
 namespace WebApplicationLB.Infrastructure.Services
 {
-    // Saves finished workouts and returns the workout history
+   
     public class WorkoutSessionService
     {
         private readonly ApplicationDbContext _context;
@@ -16,7 +16,6 @@ namespace WebApplicationLB.Infrastructure.Services
             _context = context;
         }
 
-        // History list, newest first. Totals are calculated by the database.
         public async Task<ServiceResponse<List<WorkoutSessionResponseDTO>>> GetSessionsByUser(int userID)
         {
             var sessions = await _context.WorkoutSessions
@@ -41,7 +40,6 @@ namespace WebApplicationLB.Infrastructure.Services
             return ServiceResponse<List<WorkoutSessionResponseDTO>>.Success(sessions);
         }
 
-        // One session with all of its sets
         public async Task<ServiceResponse<WorkoutSessionResponseDTO>> GetSessionById(int sessionID, int userID)
         {
             var session = await _context.WorkoutSessions
@@ -69,7 +67,6 @@ namespace WebApplicationLB.Infrastructure.Services
                 return ServiceResponse<WorkoutSessionResponseDTO>.Fail("A workout needs at least one set.");
             }
 
-            // The plan (if any) must belong to this user. Its name is saved as a snapshot.
             var planName = "Free workout";
             if (dto.WorkoutPlanID.HasValue)
             {
@@ -82,7 +79,6 @@ namespace WebApplicationLB.Infrastructure.Services
                 planName = plan.WorkoutPlanName;
             }
 
-            // Every exercise in the sets must exist
             var exerciseIds = dto.Sets.Select(s => s.ExerciseID).Distinct().ToList();
             var foundCount = await _context.Exercises.CountAsync(e => exerciseIds.Contains(e.ExerciseID));
             if (foundCount != exerciseIds.Count)
@@ -108,7 +104,6 @@ namespace WebApplicationLB.Infrastructure.Services
                 }).ToList()
             };
 
-            // The session and all of its sets are saved in one transaction
             _context.WorkoutSessions.Add(session);
             await _context.SaveChangesAsync();
 
@@ -125,7 +120,6 @@ namespace WebApplicationLB.Infrastructure.Services
                 return ServiceResponse<bool>.NotFound("Workout session not found.");
             }
 
-            // The sets are removed by the database (ON DELETE CASCADE)
             _context.WorkoutSessions.Remove(session);
             await _context.SaveChangesAsync();
 
